@@ -42,13 +42,13 @@ Personally, I like the following Linux distros: [Manjaro](https://manjaro.org/),
 
 **Resources**:
 
-- [Software Carpentry](http://software-carpentry.org/lessons/) and last session
-  at [UW-Madison](https://uw-madison-aci.github.io/2018-08-29-uwmadison-swc/)
+
 - Karl Broman's [tutorials](http://kbroman.org/pages/tutorials.html) on
   git/github, make, perl, and more
 - Cécile Ané's [course](http://cecileane.github.io/computingtools/) (STAT 679/992) on Computing Tools for Data Analytics
 - [CS231n](https://cs231n.github.io/), [CS246](http://web.stanford.edu/class/cs246/), [CS229T](http://web.stanford.edu/class/cs229t/) from Stanford
 - [R for Data Science](https://r4ds.had.co.nz/)
 - Editor/IDE: [VS Code](https://code.visualstudio.com/), [PyCharm](https://www.jetbrains.com/pycharm/), [Sublime](https://www.sublimetext.com/), [SpaceVim](https://github.com/SpaceVim/SpaceVim)
+- [Google Colab](https://colab.research.google.com/)
 - Remzi Arpaci-Dusseau's free [book](http://pages.cs.wisc.edu/~remzi/OSTEP/) on Operating Systems ([CS 537](http://pages.cs.wisc.edu/~shivaram/cs537-sp20/))
 

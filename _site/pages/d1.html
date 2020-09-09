@@ -1,0 +1,326 @@
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Discussion 1</title>
+    <meta name="author" content="Linquan Ma">
+
+    <!-- Enable responsive viewport -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
+    <!--[if lt IE 9]>
+      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+    <!-- Le styles -->
+    <link href="http://mlqmlq.github.io/STAT628/assets/themes/twitter/bootstrap/css/bootstrap.2.2.2.min.css" rel="stylesheet">
+    <link href="http://mlqmlq.github.io/STAT628/assets/themes/twitter/css/style.css?body=1" rel="stylesheet" type="text/css" media="all">
+    <link href="http://mlqmlq.github.io/STAT628/assets/themes/twitter/css/main.css" rel="stylesheet" type="text/css" media="all">
+
+    <!-- Le fav and touch icons -->
+
+    <!-- atom & rss feed -->
+    <link href="nil" type="application/atom+xml" rel="alternate" title="Sitewide ATOM Feed">
+    <link href="nil" type="application/rss+xml" rel="alternate" title="Sitewide RSS Feed">
+
+  </head>
+
+  <body>
+    <div class="navbar">
+      <div class="navbar-inner">
+        <div class="container-narrow">
+          <a class="brand" href="/">Data Science Practicum - STAT 628 - Fall 2020</a>
+          <ul class="nav">
+              <li><a href="/pages/schedule.html">schedule</a></li>
+          </ul>
+
+        </div>
+      </div>
+    </div>
+
+    <div class="container-narrow">
+
+      <div class="content">
+        
+<div class="page-header">
+  <h2>Discussion 1 </h2>
+</div>
+
+<div class="row-fluid">
+  <div class="span12">
+    <h3 id="survey">Survey:</h3>
+
+<ul>
+  <li>your name</li>
+  <li>your program, your year</li>
+  <li>your next step? continue research or industry</li>
+  <li>what is your favorite programming language?</li>
+</ul>
+
+<h3 id="expectations">Expectations</h3>
+
+<ul>
+  <li>active participations
+    <ul>
+      <li>ask questions</li>
+      <li>try things out, spend time debugging</li>
+      <li>help others with their practical roadblocks</li>
+    </ul>
+  </li>
+</ul>
+
+<h4 id="i-will-not">I will <em>not</em>:</h4>
+
+<ul>
+  <li>google things for you. For example, if you ask my <em>how to install jupyter notebook</em>, I will send you this <a href="http://lmgtfy.com/?q=how+to+install+jupyter+notebook">link</a></li>
+  <li>teach how to use a programming language</li>
+  <li>tell how past students do the module. You shouldn’t ask for any kind of code or material also. We will check them.</li>
+</ul>
+
+<h3 id="questions">Questions?</h3>
+
+<div style="text-align:center"><img src="https://media1.tenor.com/images/cd3ee8f2a22b429050b954cabbf81c6b/tenor.gif?itemid=14812024" width="250" /></div>
+
+<p>Some of the following contents are from Prof. Ané’s <a href="http://cecileane.github.io/computingtools/pages/notes0906-intro-shell.html">STAT 679</a> and <a href="https://en.wikibooks.org/wiki/Bourne_Shell_Scripting/Files_and_streams">Wikibook</a>.</p>
+
+<h2 id="the-unix-shell">The Unix Shell</h2>
+
+<p>GUI (graphical user interface): easy but not reproducible.</p>
+
+<p>CLI (command line interface) or REPL (read-evaluate-print loop): steep learning curve but reproducible and powerful.</p>
+
+<p>After you have a terminal open, type <code class="language-plaintext highlighter-rouge">echo $SHELL</code>.
+You may see this:</p>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span><span class="nb">echo</span> <span class="nv">$SHELL</span>
+/bin/bash
+</code></pre></div></div>
+
+<p>or you may get this:</p>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>% <span class="nb">echo</span> <span class="nv">$SHELL</span>
+/bin/zsh
+</code></pre></div></div>
+
+<p>The terminal is the “window” (more or less), while the shell is a program
+(or a programming language, like R and Python are). You can even <a href="http://pages.cs.wisc.edu/~shivaram/cs537-sp20/p2a.html">write your own shell</a>!</p>
+
+<p>There are several shell programs, <code class="language-plaintext highlighter-rouge">bash</code> (and <code class="language-plaintext highlighter-rouge">zsh</code>) being the most common.
+They are almost equivalent.</p>
+
+<h3 id="a-list-of-shell-commands">A list of shell commands</h3>
+
+<ul>
+  <li>directory structure, root is <code class="language-plaintext highlighter-rouge">/</code></li>
+  <li>relative versus absolute paths
+    <ul>
+      <li>in your code and projects: use <strong>relative</strong> paths as much as
+possible: it makes your code more portable, for others, and
+for yourself if you re-locate your own project folder</li>
+    </ul>
+  </li>
+  <li>shortcuts: <code class="language-plaintext highlighter-rouge">.</code>, <code class="language-plaintext highlighter-rouge">..</code>, <code class="language-plaintext highlighter-rouge">~</code>, <code class="language-plaintext highlighter-rouge">-</code>
+    <ul>
+      <li><code class="language-plaintext highlighter-rouge">cd -</code> is so useful!</li>
+    </ul>
+  </li>
+  <li>tab completion to get program and file names</li>
+  <li>up/down arrows and <code class="language-plaintext highlighter-rouge">!</code> to repeat commands</li>
+</ul>
+
+<table rules="groups">
+  <thead>
+    <tr>
+      <th style="text-align: left"> </th>
+      <th style="text-align: left"> </th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: left"><code class="language-plaintext highlighter-rouge">man</code></td>
+      <td style="text-align: left">display the manual of a command</td>
+    </tr>
+    <tr>
+      <td style="text-align: left"><code class="language-plaintext highlighter-rouge">pwd</code></td>
+      <td style="text-align: left">print working directory. where am I?</td>
+    </tr>
+    <tr>
+      <td style="text-align: left"><code class="language-plaintext highlighter-rouge">ls</code></td>
+      <td style="text-align: left">list. many options, e.g. <code class="language-plaintext highlighter-rouge">-a</code> (all) <code class="language-plaintext highlighter-rouge">-l</code> (long) <code class="language-plaintext highlighter-rouge">-lrt</code> (reverse-sorted by time)</td>
+    </tr>
+    <tr>
+      <td style="text-align: left"><code class="language-plaintext highlighter-rouge">cd</code></td>
+      <td style="text-align: left">change directory</td>
+    </tr>
+    <tr>
+      <td style="text-align: left"><code class="language-plaintext highlighter-rouge">mkdir</code></td>
+      <td style="text-align: left">make directory</td>
+    </tr>
+    <tr>
+      <td style="text-align: left"><code class="language-plaintext highlighter-rouge">rm</code></td>
+      <td style="text-align: left">remove (forever). <code class="language-plaintext highlighter-rouge">-f</code> to force, <code class="language-plaintext highlighter-rouge">-i</code> to ask interactively, <code class="language-plaintext highlighter-rouge">-r</code> recursively</td>
+    </tr>
+    <tr>
+      <td style="text-align: left"><code class="language-plaintext highlighter-rouge">mv</code></td>
+      <td style="text-align: left">move (and rename). can overwrite existing files, unless <code class="language-plaintext highlighter-rouge">-i</code> to ask</td>
+    </tr>
+    <tr>
+      <td style="text-align: left"><code class="language-plaintext highlighter-rouge">cp</code></td>
+      <td style="text-align: left">copy. would also overwrite existing files</td>
+    </tr>
+    <tr>
+      <td style="text-align: left"><code class="language-plaintext highlighter-rouge">wc</code></td>
+      <td style="text-align: left">word count: lines, words, characters. <code class="language-plaintext highlighter-rouge">-l</code>, <code class="language-plaintext highlighter-rouge">-w</code>, <code class="language-plaintext highlighter-rouge">-c</code></td>
+    </tr>
+    <tr>
+      <td style="text-align: left"><code class="language-plaintext highlighter-rouge">cat</code></td>
+      <td style="text-align: left">concatenate</td>
+    </tr>
+    <tr>
+      <td style="text-align: left"><code class="language-plaintext highlighter-rouge">less</code></td>
+      <td style="text-align: left">because “less is more”. <code class="language-plaintext highlighter-rouge">q</code> to quit.</td>
+    </tr>
+    <tr>
+      <td style="text-align: left"><code class="language-plaintext highlighter-rouge">sort</code></td>
+      <td style="text-align: left"><code class="language-plaintext highlighter-rouge">-n</code> for numerical sorting</td>
+    </tr>
+    <tr>
+      <td style="text-align: left"><code class="language-plaintext highlighter-rouge">head</code></td>
+      <td style="text-align: left">first 10 lines. <code class="language-plaintext highlighter-rouge">-n 3</code> for first 3 lines (etc.)</td>
+    </tr>
+    <tr>
+      <td style="text-align: left"><code class="language-plaintext highlighter-rouge">tail</code></td>
+      <td style="text-align: left">last 10 lines. <code class="language-plaintext highlighter-rouge">-n 3</code> for last 3 lines, <code class="language-plaintext highlighter-rouge">-n +30</code> for line 30 and up</td>
+    </tr>
+    <tr>
+      <td style="text-align: left"><code class="language-plaintext highlighter-rouge">echo</code></td>
+      <td style="text-align: left">print</td>
+    </tr>
+    <tr>
+      <td style="text-align: left"><code class="language-plaintext highlighter-rouge">chmod</code></td>
+      <td style="text-align: left">change file permissions</td>
+    </tr>
+    <tr>
+      <td style="text-align: left"><code class="language-plaintext highlighter-rouge">history</code></td>
+      <td style="text-align: left">shows the history of all previous commands, numbered</td>
+    </tr>
+  </tbody>
+  <tbody>
+    <tr>
+      <td style="text-align: left"> </td>
+      <td style="text-align: left"> </td>
+    </tr>
+  </tbody>
+</table>
+
+<p>The shell is an incredibly powerful tool:</p>
+
+<ul>
+  <li>The Unix shell can do great things, but power comes with danger: it’s unsafe!</li>
+</ul>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span><span class="nb">rm</span> <span class="nt">-rf</span> <span class="k">*</span>
+</code></pre></div></div>
+
+<p>deletes all files in the current directory.</p>
+
+<p><code class="language-plaintext highlighter-rouge">rm</code> is to remove files &amp; directories<br />
+<code class="language-plaintext highlighter-rouge">-r</code> will do it recursively (enter each directory within each directory)<br />
+<code class="language-plaintext highlighter-rouge">-f</code> will “force” removal without asking you confirmation for each individual file<br />
+<code class="language-plaintext highlighter-rouge">*</code> in the shell will match anything</p>
+
+<p>You should understand what the command is doing before executing it!</p>
+
+<h2 id="the-unix-world-one-file-after-another">The Unix world: one file after another</h2>
+
+<p>When you think of a computer, you usually come up with the following things:</p>
+
+<ul>
+  <li>
+    <p>The computer itself</p>
+  </li>
+  <li>
+    <p>The keyboard</p>
+  </li>
+  <li>
+    <p>The mouse</p>
+  </li>
+  <li>
+    <p>Your hard drive with your files and directories on it</p>
+  </li>
+  <li>
+    <p>The network connection leading to the Internet</p>
+  </li>
+</ul>
+
+<p>However, everything in the whole (Unix) universe is a file. Your (data) files are files. Your directories are files. Your hard drive is a file. Your keyboard is a read-only file of infinite size. Your monitor is infinitely sized write-only files. Your network connection is a read/write file.</p>
+
+<h2 id="streams-what-goes-between-files">Streams: what goes between files</h2>
+
+<p>Everything in Unix is a file – except that which sits between files. Between files Unix defines a mechanism that allows data to move from one file to another: the <strong>stream</strong>.</p>
+
+<p>Unix has the following three standard streams:</p>
+
+<ul>
+  <li>
+    <p><strong>Standard in (stdin)</strong>: the standard stream for input into a file.</p>
+  </li>
+  <li>
+    <p><strong>Standard out (stdout)</strong>: the standard stream for output out of a file.</p>
+  </li>
+  <li>
+    <p><strong>Standard error (stderr)</strong>: the standard stream for error output from a file.</p>
+  </li>
+</ul>
+
+<div style="text-align:center"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/70/Stdstreams-notitle.svg/1920px-Stdstreams-notitle.svg.png" width="300" /></div>
+
+<h3 id="text-streams">Text streams</h3>
+
+<p>to process a stream of data rather than holding it all in memory.</p>
+
+<p>Example: concatenate two data files.
+Open both in editor, copy one and paste into the other?</p>
+
+<ul>
+  <li>may not have enough memory</li>
+  <li>manual operation: error-prone and not reproducible.</li>
+</ul>
+
+<p>Instead: print the files’s content to <em>standard output</em> stream and
+redirect this stream from our terminal to the file we wish to save the combined results to.</p>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">cat </span>a.txt b.txt c.txt
+<span class="nb">cat</span> <span class="k">*</span>.txt <span class="o">&gt;</span> combine.txt
+</code></pre></div></div>
+
+<h2 id="mock-interview-question">Mock interview question</h2>
+
+<p>How can you generate a uniformly distributed random number between 1-7 with only a die?</p>
+<div style="text-align:center"><img src="https://www.theboardgamefamily.com/wp-content/uploads/2010/12/Settlers-board1.jpg" width="300" /></div>
+
+<hr />
+
+  </div>
+</div>
+
+
+      </div>
+      <hr>
+      <footer>
+        <p>
+          <!-- start of footer -->
+          Fall 2020 &nbsp;-&nbsp;
+          <a href="http://mlqmlq.github.io">Linquan Ma</a>
+          <!-- end of footer -->
+        </small></p>
+      </footer>
+
+    </div>
+
+    
+  </body>
+</html>
+
