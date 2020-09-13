@@ -28,6 +28,10 @@ author: "Linquan Ma"
 
 + [dplyr](https://github.com/tidyverse/dplyr)
 
++ TensorFlow
+
++ SQLite
+
 + Data Science interview questions
 
 **Hardware Requirements**:

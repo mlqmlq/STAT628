@@ -16,10 +16,18 @@ Will get updated each week, refresh your browser!
 
 ---
 <p></p>
-#### [Discussion 1](d1.html) (09/09 & 09/11)
+#### [Discussion 2](d2.html) (09/16)
+
+- Unix pipes and filters
+- dplyr
+
+---
+<p></p>
+#### [Discussion 1](d1.html) (09/09)
 
 - Talk about yourself
 - General rule
 - The Unix Shell
+
 
 ---
