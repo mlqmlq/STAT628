@@ -16,7 +16,14 @@ Will get updated each week, refresh your browser!
 
 ---
 <p></p>
-#### [Discussion 2](d2.html) (09/16)
+#### [Discussion 3](d3.html) (09/23 & 09/25)
+
+- Jupyter Notebook
+- R Shiny
+
+---
+<p></p>
+#### [Discussion 2](d2.html) (09/16 & 18)
 
 - Unix pipes and filters
 - dplyr

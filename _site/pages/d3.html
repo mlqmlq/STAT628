@@ -1,0 +1,313 @@
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Discussion 3</title>
+    <meta name="author" content="Linquan Ma">
+
+    <!-- Enable responsive viewport -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
+    <!--[if lt IE 9]>
+      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+    <!-- Le styles -->
+    <link href="http://mlqmlq.github.io/STAT628/assets/themes/twitter/bootstrap/css/bootstrap.2.2.2.min.css" rel="stylesheet">
+    <link href="http://mlqmlq.github.io/STAT628/assets/themes/twitter/css/style.css?body=1" rel="stylesheet" type="text/css" media="all">
+    <link href="http://mlqmlq.github.io/STAT628/assets/themes/twitter/css/main.css" rel="stylesheet" type="text/css" media="all">
+
+    <!-- Le fav and touch icons -->
+
+    <!-- atom & rss feed -->
+    <link href="nil" type="application/atom+xml" rel="alternate" title="Sitewide ATOM Feed">
+    <link href="nil" type="application/rss+xml" rel="alternate" title="Sitewide RSS Feed">
+
+  </head>
+
+  <body>
+    <div class="navbar">
+      <div class="navbar-inner">
+        <div class="container-narrow">
+          <a class="brand" href="/">Data Science Practicum - STAT 628 - Fall 2020</a>
+          <ul class="nav">
+              <li><a href="/pages/schedule.html">schedule</a></li>
+          </ul>
+
+        </div>
+      </div>
+    </div>
+
+    <div class="container-narrow">
+
+      <div class="content">
+        
+<div class="page-header">
+  <h2>Discussion 3 </h2>
+</div>
+
+<div class="row-fluid">
+  <div class="span12">
+    <h2 id="jupyter-notebook">Jupyter Notebook</h2>
+
+<p>Jupyter has lots of cool features. In this discussion, we are getting familiar with using R and Python in Jupyter Notebook.</p>
+
+<p>You can check this <a href="http://arogozhnikov.github.io/2016/09/10/jupyter-features.html?utm_content=bufferb0c6b&amp;utm_medium=social&amp;utm_source=twitter.com&amp;utm_campaign=buffer">post</a> for more features of Jupyter notebook.</p>
+
+<h3 id="anaconda">Anaconda</h3>
+
+<p><a href="https://www.anaconda.com/download/">Download</a></p>
+
+<ul>
+  <li>
+    <p>Download anaconda with Python3.8</p>
+  </li>
+  <li>
+    <p>Open anaconda, go to <em>Environments</em>, create a new enviroments call <code class="language-plaintext highlighter-rouge">stat628</code> with R kernel, and Python 3.8</p>
+  </li>
+</ul>
+
+<p><img src="../assets/video/create_env.gif" alt="" /></p>
+
+<ul>
+  <li>Go to home, install <strong>Jupyter notebook</strong> or <strong>Jupyter lab</strong></li>
+</ul>
+
+<p><img src="../assets/video/install_jupyter.gif" alt="" /></p>
+
+<ul>
+  <li>Launch jupyter</li>
+</ul>
+
+<p><img src="../assets/video/launch_jupyter.gif" alt="" /></p>
+
+<ul>
+  <li>If you want to use R kernel in the Jupyter Notebook, you need to install the <code class="language-plaintext highlighter-rouge">IRkernel</code> package in R. Instructions are <a href="https://irkernel.github.io/installation/">here</a>. If you are on a Mac,  be sure to execute the command in R started from the Terminal, not the R App!</li>
+</ul>
+
+<p>Now start your jupyter notebook, <strong>you can choose python or R kernel in your jupyter notebook</strong>.</p>
+
+<h3 id="library-or-module">library or module</h3>
+
+<p>In R we call <code class="language-plaintext highlighter-rouge">library</code> package, in python we call <code class="language-plaintext highlighter-rouge">import</code> module</p>
+
+<table rules="groups">
+  <thead>
+    <tr>
+      <th style="text-align: left">R</th>
+      <th style="text-align: left">Python</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: left">install.packages()</td>
+      <td style="text-align: left">pip install (bash)</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">library(ggplot2)</td>
+      <td style="text-align: left">import pandas</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">ggplot2::ggplot</td>
+      <td style="text-align: left">from pandas import DataFrame</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">source(‘script.R’)</td>
+      <td style="text-align: left">import script</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">…</td>
+      <td style="text-align: left">…</td>
+    </tr>
+  </tbody>
+  <tbody>
+    <tr>
+      <td style="text-align: left"> </td>
+      <td style="text-align: left"> </td>
+    </tr>
+  </tbody>
+</table>
+
+<p>In R, we use <code class="language-plaintext highlighter-rouge">install.package()</code> in the <code class="language-plaintext highlighter-rouge">R</code> console to install packages. In python, we can use <a href="https://pip.pypa.io/en/stable/user_guide/#running-pip"><code class="language-plaintext highlighter-rouge">pip</code></a> to install python packages.</p>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># shell</span>
+pip <span class="nb">install </span>numpy
+</code></pre></div></div>
+
+<p>or</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># Python
+</span><span class="kn">import</span> <span class="nn">pip</span>
+<span class="n">pip</span><span class="p">.</span><span class="n">main</span><span class="p">([</span><span class="s">'install'</span><span class="p">,</span> <span class="s">'numpy'</span><span class="p">])</span>
+
+<span class="kn">import</span> <span class="nn">numpy</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="n">pd</span>
+</code></pre></div></div>
+
+<div class="language-R highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># R</span><span class="w">
+</span><span class="n">install.packages</span><span class="p">(</span><span class="s1">'ggplot2'</span><span class="p">)</span><span class="w">
+</span><span class="n">library</span><span class="p">(</span><span class="n">ggplot2</span><span class="p">)</span><span class="w">
+</span></code></pre></div></div>
+
+<h2 id="practice-questions">Practice questions</h2>
+<hr />
+
+<p>Downloads</p>
+
+<ul>
+  <li><a href="../assets/notebooks/dis2_python.ipynb">Python notebook</a></li>
+  <li><a href="../assets/notebooks/dis2_R.ipynb">R notebook</a></li>
+</ul>
+
+<p><code class="language-plaintext highlighter-rouge">Numpy</code> tips:</p>
+
+<p>If <code class="language-plaintext highlighter-rouge">A</code> and <code class="language-plaintext highlighter-rouge">B</code> are two 2-D numpy arrays,</p>
+
+<ul>
+  <li>
+    <p><code class="language-plaintext highlighter-rouge">A @ B</code>: matrix multiplication</p>
+  </li>
+  <li>
+    <p><code class="language-plaintext highlighter-rouge">X.T</code>: transpose of a matrix</p>
+  </li>
+  <li>
+    <p><code class="language-plaintext highlighter-rouge">np.linalg.inv(A)</code>: inverse of <code class="language-plaintext highlighter-rouge">A</code></p>
+  </li>
+  <li>
+    <p><code class="language-plaintext highlighter-rouge">A.shape()</code>: returns the of rows and columns of <code class="language-plaintext highlighter-rouge">A</code></p>
+  </li>
+  <li>
+    <p><code class="language-plaintext highlighter-rouge">np.diag(A)</code>: returns the diagonal elements of <code class="language-plaintext highlighter-rouge">A</code></p>
+  </li>
+</ul>
+
+<h2 id="rshiny">RShiny</h2>
+<hr />
+
+<p>I do not know <a href="https://www.javascript.com/">JavaScript</a>, you may try <a href="https://medium.freecodecamp.org/how-to-build-an-html-calculator-app-from-scratch-using-javascript-4454b8714b98">this</a> if you want, but I do <em>not recommend</em></p>
+
+<p>The following tutorial borrows from <a href="https://shiny.rstudio.com/tutorial/written-tutorial/lesson1/">Rstudio shiny tutorial</a>.</p>
+
+<p>You can also try this <a href="https://deanattali.com/blog/advanced-shiny-tips/">Advance shiny tips</a></p>
+
+<p>Free server <a href="https://www.shinyapps.io/">Shinyapps</a></p>
+
+<ol>
+  <li>Install the <a href="https://shiny.rstudio.com/">shiny</a> package</li>
+  <li>
+    <p>Run the very first example</p>
+
+    <div class="language-R highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="w"> </span><span class="n">install.packages</span><span class="p">(</span><span class="s2">"shiny"</span><span class="p">)</span><span class="w">
+ </span><span class="n">library</span><span class="p">(</span><span class="n">shiny</span><span class="p">)</span><span class="w">
+ </span><span class="n">runExample</span><span class="p">(</span><span class="s2">"01_hello"</span><span class="p">)</span><span class="w">
+</span></code></pre></div>    </div>
+
+    <p>If you notice that it require two parts, <code class="language-plaintext highlighter-rouge">ui</code> (how it looks like) and <code class="language-plaintext highlighter-rouge">server</code> (how it work inside)</p>
+  </li>
+</ol>
+
+<p><strong>Start practice</strong></p>
+<ol>
+  <li>
+    <p>create an <code class="language-plaintext highlighter-rouge">some_random_name.R</code> script, copy paste the following code into it. <a href="https://shiny.rstudio.com/reference/shiny/1.0.1/fluidPage.html">fluidPage</a></p>
+
+    <div class="language-R highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="w"> </span><span class="n">library</span><span class="p">(</span><span class="n">shiny</span><span class="p">)</span><span class="w">
+ </span><span class="n">ui</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">fluidPage</span><span class="p">(</span><span class="w">
+     </span><span class="n">titlePanel</span><span class="p">(</span><span class="s2">"Discussion 628"</span><span class="p">)</span><span class="w">
+ </span><span class="p">)</span><span class="w">
+ </span><span class="n">server</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="k">function</span><span class="p">(</span><span class="n">input</span><span class="p">,</span><span class="w"> </span><span class="n">output</span><span class="p">)</span><span class="w"> </span><span class="p">{}</span><span class="w">
+ </span><span class="n">shinyApp</span><span class="p">(</span><span class="n">ui</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ui</span><span class="p">,</span><span class="w"> </span><span class="n">server</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">server</span><span class="p">)</span><span class="w">
+</span></code></pre></div>    </div>
+  </li>
+  <li>
+    <p>Classic <code class="language-plaintext highlighter-rouge">Hello World</code>. How to print a text? Always check <a href="https://shiny.rstudio.com/gallery/">Gallery</a> and <a href="https://shiny.rstudio.com/reference/shiny/1.5.0/">Reference</a>.</p>
+
+    <div class="language-R highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="w"> </span><span class="n">library</span><span class="p">(</span><span class="n">shiny</span><span class="p">)</span><span class="w">
+ </span><span class="n">ui</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">fluidPage</span><span class="p">(</span><span class="w">
+     </span><span class="n">titlePanel</span><span class="p">(</span><span class="s2">"Discussion 628"</span><span class="p">)</span><span class="w">
+     </span><span class="c1">## Code you should write. No unique answer</span><span class="w">
+     </span><span class="c1">## Do remember add , at the end of titlePanel("Discussion 628")</span><span class="w">
+ </span><span class="p">)</span><span class="w">
+ </span><span class="n">server</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="k">function</span><span class="p">(</span><span class="n">input</span><span class="p">,</span><span class="w"> </span><span class="n">output</span><span class="p">)</span><span class="w"> </span><span class="p">{}</span><span class="w">
+ </span><span class="n">shinyApp</span><span class="p">(</span><span class="n">ui</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ui</span><span class="p">,</span><span class="w"> </span><span class="n">server</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">server</span><span class="p">)</span><span class="w">
+</span></code></pre></div>    </div>
+  </li>
+  <li>
+    <p>Add more panels. <a href="https://shiny.rstudio.com/reference/shiny/1.2.0/">UI layout</a></p>
+
+    <ol>
+      <li><code class="language-plaintext highlighter-rouge">titlePanel</code>, <code class="language-plaintext highlighter-rouge">sideBarPanel</code>, <code class="language-plaintext highlighter-rouge">mainPanel</code> or no panel</li>
+      <li>add a <a href="https://shiny.rstudio.com/reference/shiny/1.0.1/sidebarPanel.html"><code class="language-plaintext highlighter-rouge">sidebarPanel</code></a></li>
+    </ol>
+
+    <div class="language-R highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="w"> </span><span class="n">...</span><span class="w">
+ </span><span class="n">ui</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">fluidPage</span><span class="p">(</span><span class="w">
+     </span><span class="n">titlePanel</span><span class="p">(</span><span class="s2">"Discussion 628"</span><span class="p">),</span><span class="w">
+     </span><span class="c1">## Code you should write. No unique answer</span><span class="w">
+ </span><span class="p">)</span><span class="w">
+ </span><span class="n">...</span><span class="w">
+</span></code></pre></div>    </div>
+  </li>
+  <li>
+    <p>Input data and output of data. <a href="https://shiny.rstudio.com/gallery/widget-gallery.html">Widget Gallery</a></p>
+
+    <p>Based on the input give the result.</p>
+
+    <div class="language-R highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="w"> </span><span class="n">...</span><span class="w">
+ </span><span class="n">f</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="k">function</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">x</span><span class="p">[</span><span class="m">1</span><span class="p">]</span><span class="o">^</span><span class="m">2</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">x</span><span class="p">[</span><span class="m">2</span><span class="p">]</span><span class="o">^</span><span class="m">3</span><span class="w"> </span><span class="p">}</span><span class="w">
+ </span><span class="n">ui</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">fluidPage</span><span class="p">(</span><span class="w">
+   </span><span class="n">titlePanel</span><span class="p">(</span><span class="s2">"Discussion 628"</span><span class="p">),</span><span class="w">
+   </span><span class="c1">## Code you should write. No unique answer</span><span class="w">
+   </span><span class="n">numericInput</span><span class="p">(</span><span class="s2">"n1"</span><span class="p">,</span><span class="w"> </span><span class="n">label</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">h3</span><span class="p">(</span><span class="s2">"Numeric input 1"</span><span class="p">),</span><span class="w"> </span><span class="n">value</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">5</span><span class="p">),</span><span class="w">
+   </span><span class="n">numericInput</span><span class="p">(</span><span class="s2">"n2"</span><span class="p">,</span><span class="w"> </span><span class="n">label</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">h3</span><span class="p">(</span><span class="s2">"Numeric input 2"</span><span class="p">),</span><span class="w"> </span><span class="n">value</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">2</span><span class="p">),</span><span class="w">
+   </span><span class="n">hr</span><span class="p">(),</span><span class="w">
+   </span><span class="n">verbatimTextOutput</span><span class="p">(</span><span class="s2">"value"</span><span class="p">)</span><span class="w">
+ </span><span class="p">)</span><span class="w">
+
+ </span><span class="n">server</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="k">function</span><span class="p">(</span><span class="n">input</span><span class="p">,</span><span class="w"> </span><span class="n">output</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+   </span><span class="c1"># `value` will in the output</span><span class="w">
+   </span><span class="n">output</span><span class="o">$</span><span class="n">value</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">renderPrint</span><span class="p">({</span><span class="w">
+     </span><span class="n">f</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="n">input</span><span class="o">$</span><span class="n">n1</span><span class="p">,</span><span class="w"> </span><span class="n">input</span><span class="o">$</span><span class="n">n2</span><span class="p">))</span><span class="w">
+   </span><span class="p">})</span><span class="w">
+ </span><span class="p">}</span><span class="w">
+ </span><span class="n">shinyApp</span><span class="p">(</span><span class="n">ui</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ui</span><span class="p">,</span><span class="w"> </span><span class="n">server</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">server</span><span class="p">)</span><span class="w">
+
+</span></code></pre></div>    </div>
+  </li>
+</ol>
+
+<p><strong>Practice</strong>: Create a Shiny app to calculate <a href="https://en.wikipedia.org/wiki/Fibonacci_number">Fibonacci number</a></p>
+
+<h2 id="mock-interview-question-from-google">Mock interview question (from Google)</h2>
+
+<ul>
+  <li>Consider <code class="language-plaintext highlighter-rouge">Y ~ X1 + X2</code> and <code class="language-plaintext highlighter-rouge">Y ~ (X1+X2) + (X1-X2)</code> when you do OLS (assume there is no intercept). How will the predictions and the estimated regression coefficients change? How will the variance of the coefficients change? What are the intuitions?</li>
+</ul>
+
+<p><a href="../assets/notebooks/dis2_solution.ipynb">Solution Python notebook</a></p>
+
+<hr />
+
+  </div>
+</div>
+
+
+      </div>
+      <hr>
+      <footer>
+        <p>
+          <!-- start of footer -->
+          Fall 2020 &nbsp;-&nbsp;
+          <a href="http://mlqmlq.github.io">Linquan Ma</a>
+          <!-- end of footer -->
+        </small></p>
+      </footer>
+
+    </div>
+
+    
+  </body>
+</html>
+
