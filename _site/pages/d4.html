@@ -101,7 +101,7 @@
 
 <p>If you have any concerns for the grade of the coding portion, feel free to talk with me during my office hours.</p>
 
-<h2 id="nonlinear-opitmization">Nonlinear Opitmization</h2>
+<h2 id="gradient-descent">Gradient descent</h2>
 
 <p>Most of the time, when training a machine learning model, we need to perform continuous nonlinear opttimization over an objective function. In this discussion, I will cover some basic optimizers and their properties:</p>
 
@@ -113,9 +113,132 @@
 </ul>
 
 <p>Throughout the discussion, we consider the unconstrained minimization of a smooth convex function:
-\[\min_{x\in\mathbb R^n} f(x)\]</p>
+\[\min_{x\in\mathbb R^n} f(x)\]
+Most of the following materials are from <a href="https://books.google.com/books?hl=en&amp;lr=&amp;id=VbHYoSyelFcC&amp;oi=fnd&amp;pg=PR17&amp;dq=nocedal+and+wright&amp;ots=32L8zqCaWL&amp;sig=soXZhH9lxsbCS4W9U7u4iMRX_Xc#v=onepage&amp;q=nocedal%20and%20wright&amp;f=false">Nocedal and Wright (2006)</a>.</p>
+<h3 id="foundations">Foundations</h3>
 
-<h3 id="gradient-descent">Gradient descent</h3>
+<h4 id="taylors-theorem">Taylor’s Theorem</h4>
+<p><strong>Theorem 1.</strong> Given a continuously differentiable function $f : \mathbb R^n\rightarrow \mathbb R$, and given $x, p \in \mathbb R^n$, we have 
+\[f(x+p) = f(x) + \int_0^1\nabla f(x+\gamma p)^Tpd\gamma \]
+\[f(x+p) = f(x) + \nabla f(x+\gamma p)^Tp, \hspace{5mm} \text{some }\gamma\in[0,1] \]</p>
+
+<p>We sometimes call the first equation the “integral form” and the second the “mean-value form” of Taylor’s theorem.</p>
+
+<p>A crucial quantity in optimization is the Lipschitz constant $L$ for the gradient of $f$, which is defined to satisfy</p>
+
+<p><strong>Definition 1.</strong> A continuously differentiable function $f$ is called <em>L-smooth</em> or has <em>L-Lipschitz gradients</em> if 
+\[||\nabla f(x) - \nabla f(y)||\le L||x-y|| \]</p>
+
+<h3 id="descent-direction">Descent direction</h3>
+<p><strong>Definition 2.</strong> $d$ is a <em>descent direction</em> for $f$ at $x$ if $f(x + td) &lt; f(x)$ for all $t &gt; 0$ sufficiently small.</p>
+
+<p><strong>Proposition 1.</strong> If $f$ is continuously differentiable in a neighborhood of $x$, then any $d$ such that $d^T \nabla f(x) &lt; 0$ is a descent direction.</p>
+
+<p><strong>Proof:</strong> By continuity of $\nabla f$, we can identify $\bar t &gt; 0$ such that $\nabla f(x + td)^Td &lt; 0$ for all $t \in [0, \bar t]$. Hence, for any $t\in [0, \bar t]$, by the “mean-value form” of Taylor’s theorem, we have 
+\[f(x+td) = f(x) + t\nabla f(x+t\gamma d)^Td \hspace{5mm} \text{for some }\gamma\in[0,1]\]
+Since $t\gamma\in[0, \bar t]$, we have $\nabla f(x+t\gamma d)^Td &lt; 0$. Therefore, $f(x+td) &lt; f(x)$ for $t$ sufficiently small, which indicates $d$ is a descent direction. $\blacksquare$</p>
+
+<p>Note that among all directions with unit norm,
+\[\inf_{||d||=1}d^T\nabla f(x) = -\nabla f(x) \hspace{5mm} \text{achieved when } d = -\dfrac{\nabla f(x)}{||\nabla f(x)||}.\]</p>
+
+<p>For this reason, we refer to $-\nabla f(x)$ as the direction of <em>steepest descent</em>.</p>
+
+<p>Since this direction always provides a descent direction, the simplest method for optimization of a smooth function has the iterations
+\[x_{k+1} = x_k - \alpha_k\nabla f(x). \]
+If $f$ is convex, we will get a global minimizer of $f$. This algorithm is called the <em>the method of steepest descent</em>. We will then analyze how many iterations are required to ﬁnd points where the gradient nearly vanishes.</p>
+
+<div style="text-align:center"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/ff/Gradient_descent.svg/1280px-Gradient_descent.svg.png" width="300" /></div>
+
+<p>The simplest protocol is to set $\alpha_k \equiv \alpha$ and simply iterate as follows:
+\[x_{k+1} = x_k - \alpha\nabla f(x).\]
+Different assumptions will lead to difference convergence rates. We will investigate them one by one.</p>
+
+<h3 id="properties-of-steepest-descent">Properties of steepest descent</h3>
+
+<p><strong>1. General case (L-smooth):</strong></p>
+
+<p>Using the integral form of the Taylor Theorem, by setting $p = \alpha d$, we have 
+\begin{equation}
+  \begin{aligned}
+    f(x+\alpha d) &amp;= f(x) + \alpha\nabla f(x)^Td+\alpha\int_0^1[\nabla f(x+\gamma\alpha d) - \nabla f(x)]^Td \text{ d} \gamma\newline
+    &amp;\le f(x) + \alpha\nabla f(x)^Td+\alpha\int_0^1||\nabla f(x+\gamma\alpha d) - \nabla f(x)||\cdot||d||\text{ d}\gamma\newline
+    &amp;\le f(x) + \alpha\nabla f(x)^Td+\alpha\int_0^1L||\gamma\alpha d||\cdot||d||\text{ d}\gamma\newline
+    &amp;= f(x) + \alpha\nabla f(x)^Td+\alpha^2L||d||^2\int_0^1\gamma\text{ d}\gamma\newline
+    &amp;= f(x) + \alpha\nabla f(x)^Td+\alpha^2\dfrac{L}{2}||d||^2.
+  \end{aligned}
+\end{equation}</p>
+
+<p>For $x = x_k$ and $d = −\nabla f(x_k)$, the value of $\alpha$ that minimizes the expression on the right-hand side is $\alpha = 1/L$. By substituting these values, we obtain
+\[f(x_{k+1}) = f(x_k - \nabla f(x_k)/L)\le f(x_k) - \dfrac{1}{2L}||\nabla f(x_k)||^2.  \]
+Therefore, for the $T$-th iteration, we have 
+\[f(x_T) \le f(x_0) - \dfrac{1}{2L}\sum_{k = 0}^{T-1}||\nabla f(x_k)||^2. \]<br />
+By assuming $f(x) \ge \bar f$ for all $x$, we have 
+\[\sum_{k = 0}^{T-1}||\nabla f(x_k)||^2 \le 2L[f(x_0) - \bar f] \]
+Notice that \[ \min_{0\le k\le T-1}||\nabla f(x_k)||^2\le \dfrac{1}{T}\sum_{k=0}^{T-1}||\nabla f(x_k)||^2, \]
+we have 
+\[\min_{0\le k\le T-1}||\nabla f(x_k)||\le\sqrt{\dfrac{2L[f(x_0) - \bar f]}{T}} \]
+Thus, we have shown that after $T$ steps of steepest descent, we can ﬁnd a point $x$ satisfying
+\[||\nabla f(x_k)|| \le \sqrt{\dfrac{2L[f(x_0) - \bar f]}{T}}\]</p>
+
+<p><strong>2. Convex case:</strong></p>
+
+<p><strong>Theorem 2.</strong> Suppose that $f$ is convex and $L$-smooth, and $x^* $ is a global minimizer of $f$. Then the steepest descent method with stepsize $\alpha \equiv 1/L$ generates a sequence {$x_k$}  that satisfies 
+\[f(x_T) - f(x^* ) \le \dfrac{L}{2T}||x_0 - x^* ||^2, \text{ for } T = 1,2,…\]
+You can try to prove this theorem by using the inequality $f(x^* ) \ge f(x_k) + \nabla f(x^k)^T(x^* - x_k)$.</p>
+
+<p><strong>3. Strongly convex case:</strong></p>
+
+<p><strong>Definition 3.</strong> The smooth function $f: \mathbb R^d\rightarrow \mathbb R$ is strongly convex with modulus $m$ if there is a scalar $m &gt; 0$ such that
+\[f(z)\geq f(x) + \nabla f(x)^T(z-x) + \dfrac{m}{2}||z-x||^2. \]</p>
+<ul>
+  <li>If $f$ is a $L$-smooth function, then 
+\[f_\mu(x) = f(x) + \mu||x||^2\]
+is strongly convex for $\mu$ large enough.</li>
+</ul>
+
+<p><strong>Theorem 3.</strong> Suppose that $f$ is strongly convex with modulus $m$ and $L$-smooth, and $x^* $ is a global minimizer of $f$. Then the steepest descent method with stepsize $\alpha \equiv 1/L$ generates a sequence {$x_k$}  that satisfies 
+\[f(x_T) - f(x^* ) \le (1-\dfrac{m}{L})^T||f(x_0) - f(x^* ) ||^2, \text{ for } T = 1,2,…\]</p>
+
+<p><strong>4. Comparison between rates:</strong></p>
+
+<p>For the general case where we only assume $L$-smoothness, an iteration $k$ can be found such that $||\nabla f(x_k)||\leq \epsilon$ when
+\[k\geq \dfrac{2L[f(x_0) - \bar f]}{\epsilon^2}.\]</p>
+
+<p>For the weakly convex case, we have $f(x_k) - f(x^* )\leq \epsilon$ when 
+\[k\geq \dfrac{L||x_0 - x^* ||^2}{2\epsilon}.\]</p>
+
+<p>For the strongly convex case, we have $f(x_k) - f(x^* )\leq \epsilon$ when 
+\[k\geq \dfrac{L}{m}\log\dfrac{f(x_0) - f(x^* )}{\epsilon}\]</p>
+
+<p>When $\epsilon$ is small (for example $\epsilon&lt;10^{-6}$), the third case would convergence dramatically faster.</p>
+
+<h2 id="exercise">Exercise:</h2>
+
+<p>Write a code to apply various ﬁrst-order methods to the convex quadratic function $f(x) = (1/2)x^TAx$, where the positive definite matrix $A$ (of dimension $100\times 100$) is generate by the following code to have eigenvalues randomly distributed in a range of $[m, L]$, with $0&lt; m &lt; L$:</p>
+<div class="language-r highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">set.seed</span><span class="p">(</span><span class="m">0</span><span class="p">)</span><span class="w">
+</span><span class="n">mu</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">0.01</span><span class="p">;</span><span class="w"> </span><span class="n">L</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">1</span><span class="p">;</span><span class="w"> </span><span class="n">kappa</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">L</span><span class="o">/</span><span class="n">mu</span><span class="w">
+</span><span class="n">n</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">100</span><span class="w">
+</span><span class="n">D</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">runif</span><span class="p">(</span><span class="n">n</span><span class="p">);</span><span class="w"> </span><span class="n">D</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">10</span><span class="o">^</span><span class="n">D</span><span class="p">;</span><span class="w"> </span><span class="n">Dmin</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">min</span><span class="p">(</span><span class="n">D</span><span class="p">);</span><span class="w"> </span><span class="n">Dmax</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">max</span><span class="p">(</span><span class="n">D</span><span class="p">)</span><span class="w">
+</span><span class="n">D</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="n">D</span><span class="o">-</span><span class="n">Dmin</span><span class="p">)</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="p">(</span><span class="n">Dmax</span><span class="o">-</span><span class="n">Dmin</span><span class="p">)</span><span class="w">
+</span><span class="n">D</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">mu</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">D</span><span class="o">*</span><span class="p">(</span><span class="n">L</span><span class="o">-</span><span class="n">mu</span><span class="p">)</span><span class="w">
+</span><span class="n">A</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">diag</span><span class="p">(</span><span class="n">D</span><span class="p">)</span><span class="w"> 
+</span><span class="n">x0</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">runif</span><span class="p">(</span><span class="n">n</span><span class="p">,</span><span class="m">1</span><span class="p">)</span><span class="w">
+</span></code></pre></div></div>
+
+<p>It’s obvious that $x^* $ is obviously a global minimizer of $f$. In all cases, start from a point $x_0$ generated by the <code class="language-plaintext highlighter-rouge">R</code> command <code class="language-plaintext highlighter-rouge">runif(n)</code> and run until $f(x_k) - f(x^* ) \le 10^{-6}$.</p>
+
+<p>Implement the following methods:</p>
+<ul>
+  <li>Steepest descent with $\alpha_k \equiv 1/L$, that is,
+\[x_{k+1} = x_{k} - (1/L)\nabla f(x_k).\]</li>
+  <li>Steepest descent with $\alpha_k \equiv 1/(5L)$.</li>
+  <li><a href="http://papers.nips.cc/paper/5322-a-differential-equation-for-modeling-nesterovs-accelerated-gradient-method-theory-and-insights.pdf">Nesterov’s accelerated gradient descent</a>, with the following updates:
+\[y_k = x_k + \beta_k(x_k - x_{k-1}),\]
+\[x_{k+1} = y^k - \alpha_k\nabla f(y_k),\]
+with optim choice of $\alpha_k = 1/L$ and $\beta_k = (\sqrt L - \sqrt m)/(\sqrt L + \sqrt m)$.</li>
+</ul>
+
+<p>Draw a plot of the convergence behavior on the run, plotting the iteration number against $\log_{10}[f(x_k ) − f(x^* )]$. Use a single plot, with different colors for the different algorithms.</p>
 
 <hr />
 
