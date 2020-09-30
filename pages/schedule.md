@@ -16,6 +16,14 @@ Will get updated each week, refresh your browser!
 
 ---
 <p></p>
+#### [Discussion 4](d4.html) (09/30 & 10/02)
+
+- Rubrics for Module 1
+- Nonlinear Optimization
+
+
+---
+<p></p>
 #### [Discussion 3](d3.html) (09/23 & 09/25)
 
 - Jupyter Notebook
