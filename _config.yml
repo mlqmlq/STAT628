@@ -56,6 +56,8 @@ JB :
   #     This means always setting the protocol (http|https) or prefixing with "/"
   BASE_PATH : http://mlqmlq.github.io/STAT628
 
+  baseurl: /STAT628
+  url: http://mlqmlq.github.io
   # By default, the asset_path is automatically defined relative to BASE_PATH plus the enabled theme.
   # ex: [BASE_PATH]/assets/themes/[THEME-NAME]
   #
