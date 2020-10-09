@@ -1,0 +1,278 @@
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Discussion 5</title>
+    <meta name="author" content="Linquan Ma">
+
+    <!-- Enable responsive viewport -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
+    <!--[if lt IE 9]>
+      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+    <!-- Le styles -->
+    <link href="http://mlqmlq.github.io/STAT628/assets/themes/twitter/bootstrap/css/bootstrap.2.2.2.min.css" rel="stylesheet">
+    <link href="http://mlqmlq.github.io/STAT628/assets/themes/twitter/css/style.css?body=1" rel="stylesheet" type="text/css" media="all">
+    <link href="http://mlqmlq.github.io/STAT628/assets/themes/twitter/css/main.css" rel="stylesheet" type="text/css" media="all">
+
+    <!-- Le fav and touch icons -->
+
+    <!-- atom & rss feed -->
+    <link href="nil" type="application/atom+xml" rel="alternate" title="Sitewide ATOM Feed">
+    <link href="nil" type="application/rss+xml" rel="alternate" title="Sitewide RSS Feed">
+
+  </head>
+
+  <body>
+    <div class="navbar">
+      <div class="navbar-inner">
+        <div class="container-narrow">
+          <a class="brand" href="/">Data Science Practicum - STAT 628 - Fall 2020</a>
+          <ul class="nav">
+              <li><a href="/pages/schedule.html">schedule</a></li>
+          </ul>
+
+        </div>
+      </div>
+    </div>
+
+    <div class="container-narrow">
+
+      <div class="content">
+        
+<div class="page-header">
+  <h2>Discussion 5 </h2>
+</div>
+
+<div class="row-fluid">
+  <div class="span12">
+    <h2 id="sql-tutorial">SQL Tutorial</h2>
+
+<p>SQL, Structured Query Language, is a programming language designed to manage data stored in relational databases. SQL operates through simple, declarative statements. This keeps data accurate and secure, and helps maintain the integrity of databases, regardless of size.</p>
+
+<h2 id="relational-database">Relational database</h2>
+
+<p>A relational database is a database that organizes information into one or more tables. A table is a collection of data organized into rows and columns. Tables are sometimes referred to as relations. All data stored in a relational database is of a certain data type. Some of the most common data types are:</p>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">INTEGER</code>: a positive or negative whole number</li>
+  <li><code class="language-plaintext highlighter-rouge">TEXT</code>: a text string</li>
+  <li><code class="language-plaintext highlighter-rouge">DATE</code>: the date formatted as YYYY-MM-DD</li>
+  <li><code class="language-plaintext highlighter-rouge">REAL</code>: a decimal value</li>
+</ul>
+
+<p><img src="../assets/notesFigs/sql-data-types.png" alt="" /></p>
+
+<h2 id="sqlite3-in-python">SQLite3 in Python</h2>
+
+<h3 id="start-connect-to-sqlite3-server">Start connect to sqlite3 server</h3>
+
+<p><a href="https://docs.python.org/3/library/sqlite3.html">Documentation</a></p>
+
+<p>Python is an object-oriented language <a href="https://en.wikipedia.org/wiki/Object-oriented_programming">OOP</a>, you should learn the basic concept for this term.</p>
+
+<p>To run our <code class="language-plaintext highlighter-rouge">sqlite3</code>, you need to first connect to a local/remote database via <code class="language-plaintext highlighter-rouge">.connect(NAME)</code></p>
+
+<p>Once you have a <a href="https://docs.python.org/3/library/sqlite3.html#sqlite3.Connection">Connection</a>, you can create a <a href="https://docs.python.org/3/library/sqlite3.html#sqlite3.Cursor">Cursor</a> object and call its <a href="https://docs.python.org/3/library/sqlite3.html#sqlite3.Cursor.execute">execute()</a> method to perform SQL commands. Also, you can use <code class="language-plaintext highlighter-rouge">fetchall()</code> command to get the results. Otherwise, you are merely displaying the <em>representation of the method</em>.</p>
+
+<pre><code class="language-Python"># Python3
+import sqlite3
+conn = sqlite3.connect(NAME)
+cursor_obj = conn.cursor()
+cursor_obj.execute(SQL_COMMAND)
+cursor_obj.fetchall()
+</code></pre>
+
+<h3 id="create-a-table">Create a TABLE</h3>
+
+<p>To create a <code class="language-plaintext highlighter-rouge">SQL TABLE</code>, first you need to <a href="https://www.w3schools.com/sql/sql_create_table.asp">CREAT TABLE</a>, also declare columns’ name and type</p>
+
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">--SQLite3</span>
+
+<span class="k">CREATE</span> <span class="k">TABLE</span> <span class="k">table_name</span> <span class="p">(</span>
+    <span class="n">column1</span> <span class="n">datatype</span><span class="p">,</span>
+    <span class="n">column2</span> <span class="n">datatype</span><span class="p">,</span>
+    <span class="n">column3</span> <span class="n">datatype</span><span class="p">,</span>
+   <span class="p">....</span>
+<span class="p">);</span>
+</code></pre></div></div>
+<p>In Python, if you want to run a sql command, you need to pass a string to <code class="language-plaintext highlighter-rouge">cursor.execute(SQL_COMMAND: string)</code></p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># Python3
+</span>
+<span class="n">command</span> <span class="o">=</span> <span class="s">"""
+CREATE TABLE table_name (
+    column1 datatype,
+    column2 datatype,
+    column3 datatype,
+   ....
+);
+"""</span>
+<span class="n">cursor_obj</span><span class="p">.</span><span class="n">execute</span><span class="p">(</span><span class="n">command</span><span class="p">)</span>
+</code></pre></div></div>
+
+<h3 id="show-tables-in-current-database">Show tables in current database</h3>
+
+<p>To show tables, in sqlite3 console you can use <code class="language-plaintext highlighter-rouge">.tables</code>, more command from <code class="language-plaintext highlighter-rouge">.help</code></p>
+
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">--SQLite3</span>
+
+<span class="p">.</span><span class="n">tables</span>
+</code></pre></div></div>
+
+<p>or</p>
+
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">--SQLite3</span>
+
+<span class="k">SELECT</span> <span class="n">name</span> <span class="k">FROM</span> <span class="n">sqlite_master</span> <span class="k">WHERE</span> <span class="k">type</span><span class="o">=</span><span class="s1">'table'</span><span class="p">;</span>
+</code></pre></div></div>
+
+<p>Here the <code class="language-plaintext highlighter-rouge">SELECT</code> command is select object from database, once you executing a <code class="language-plaintext highlighter-rouge">SELECT</code> statement.</p>
+
+<p>Equivalent, in python, we can do</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># Python3
+</span>
+<span class="n">command</span> <span class="o">=</span> <span class="s">"SELECT name FROM sqlite_master WHERE type='table';"</span>
+<span class="n">cursor_obj</span><span class="p">.</span><span class="n">execute</span><span class="p">(</span><span class="n">command</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">cursor_obj</span><span class="p">.</span><span class="n">fetchall</span><span class="p">())</span>
+</code></pre></div></div>
+
+<p>You can either treat the cursor as an <a href="https://docs.python.org/3/glossary.html#term-iterator">iterator</a>, call the cursor’s <a href="https://docs.python.org/3/library/sqlite3.html#sqlite3.Cursor.fetchone">fetchone()</a> method to retrieve a single matching row, or call <a href="https://docs.python.org/3/library/sqlite3.html#sqlite3.Cursor.fetchall">fetchall()</a> to get a list of the matching rows.</p>
+
+<h3 id="insert-one-record-in-database">Insert one record in database</h3>
+
+<p>Once we create our base table, we can start insert records into the database.</p>
+
+<p>In sqlite3, it is possible to write the <code class="language-plaintext highlighter-rouge">INSERT INTO</code> statement in two ways.</p>
+
+<p>The first way specifies both the column names and the values to be inserted:</p>
+
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">--SQLite3</span>
+
+<span class="k">INSERT</span> <span class="k">INTO</span> <span class="k">table_name</span> <span class="p">(</span><span class="n">column1</span><span class="p">,</span> <span class="n">column2</span><span class="p">,</span> <span class="n">column3</span><span class="p">,</span> <span class="p">...)</span>
+<span class="k">VALUES</span> <span class="p">(</span><span class="n">value1</span><span class="p">,</span> <span class="n">value2</span><span class="p">,</span> <span class="n">value3</span><span class="p">,</span> <span class="p">...);</span>
+</code></pre></div></div>
+
+<p>or</p>
+
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">--SQLite3</span>
+
+<span class="k">INSERT</span> <span class="k">INTO</span> <span class="k">table_name</span>
+<span class="k">VALUES</span> <span class="p">(</span><span class="n">value1</span><span class="p">,</span> <span class="n">value2</span><span class="p">,</span> <span class="n">value3</span><span class="p">,</span> <span class="p">...);</span>
+</code></pre></div></div>
+
+<h2 id="relational-database-1">Relational database</h2>
+
+<p>Different <a href="https://www.dotnettricks.com/learn/sqlserver/different-types-of-sql-keys">Key types</a></p>
+
+<p><a href="https://www.w3schools.com/sql/sql_primarykey.asp"><strong>Primary key</strong></a> is a set of one or more fields/columns of a table that uniquely identify a record in database table. It can not accept null, duplicate values. Only one Candidate Key can be Primary Key.</p>
+
+<p><a href="https://www.w3schools.com/sql/sql_foreignkey.asp"><strong>Foreign key</strong></a> is a field in database table that is Primary key in another table. It can accept multiple null, duplicate values. For more help refer the article <a href="http://www.dotnettricks.com/learn/sqlserver/difference-between-primary-key-and-foreign-key">Difference between primary key and foreign key</a>.</p>
+
+<p><strong>Consider if you are hiring by amazon, how did you manage amazon data? how many tables do you need, how to link them together?</strong></p>
+
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">--SQLite3</span>
+
+<span class="k">CREATE</span> <span class="k">TABLE</span> <span class="n">Customers</span> <span class="p">(</span>
+    <span class="n">CustomerID</span> <span class="nb">INT</span> <span class="k">PRIMARY</span> <span class="k">KEY</span><span class="p">,</span>
+    <span class="n">Name</span> <span class="nb">VARCHAR</span><span class="p">(</span><span class="mi">1000</span><span class="p">)</span>
+<span class="p">);</span>
+
+<span class="k">CREATE</span> <span class="k">TABLE</span> <span class="n">Products</span> <span class="p">(</span>
+    <span class="n">ProductID</span> <span class="nb">INT</span> <span class="k">PRIMARY</span> <span class="k">KEY</span><span class="p">,</span>
+    <span class="n">price</span> <span class="nb">NUMERIC</span><span class="p">,</span>
+    <span class="n">original</span> <span class="nb">VARCHAR</span><span class="p">(</span><span class="mi">1000</span><span class="p">)</span>
+<span class="p">);</span>
+
+<span class="k">CREATE</span> <span class="k">TABLE</span> <span class="n">Orders</span> <span class="p">(</span>
+    <span class="n">OrderID</span> <span class="nb">INT</span> <span class="k">PRIMARY</span> <span class="k">KEY</span><span class="p">,</span>
+    <span class="k">size</span> <span class="nb">INT</span><span class="p">,</span>
+    <span class="n">CustomerID</span> <span class="nb">INT</span><span class="p">,</span> 
+    <span class="n">ProductID</span> <span class="nb">INT</span><span class="p">,</span> 
+    <span class="k">FOREIGN</span> <span class="k">KEY</span> <span class="p">(</span><span class="n">CustomerID</span><span class="p">)</span> <span class="k">REFERENCES</span> <span class="n">Customers</span><span class="p">(</span><span class="n">CustomerID</span><span class="p">),</span>
+    <span class="k">FOREIGN</span> <span class="k">KEY</span> <span class="p">(</span><span class="n">ProductID</span><span class="p">)</span> <span class="k">REFERENCES</span> <span class="n">Products</span><span class="p">(</span><span class="n">ProductID</span><span class="p">)</span>
+<span class="p">);</span>
+</code></pre></div></div>
+
+<h3 id="why">Why?</h3>
+
+<p>Link TABLES together!</p>
+
+<h3 id="practice">Practice</h3>
+
+<p>In the <a href="https://cs.brown.edu/courses/csci1951-a/assignments/sql.html">Assignment</a>, there is a database named people.db, with the name, age, ID, and occupation of some students. Here we can create these three tables by ourself.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>people_main(ID INTEGER, name TEXT, occupation TEXT, age INTEGER)
+people_likes(ID1 INTEGER, ID2 INTEGER)
+people_friends(ID1 INTEGER, ID2 INTEGER)
+</code></pre></div></div>
+
+<ol>
+  <li>Create table <code class="language-plaintext highlighter-rouge">people_main</code>, <code class="language-plaintext highlighter-rouge">people_likes</code> and <code class="language-plaintext highlighter-rouge">people_friends</code>.</li>
+  <li>Consider what is the primary key in <code class="language-plaintext highlighter-rouge">people_main</code>.</li>
+</ol>
+
+<p>The table <code class="language-plaintext highlighter-rouge">people_likes</code>, based on following roles:</p>
+
+<ol>
+  <li>ID1 and ID2 should from people_main table</li>
+  <li>ID1 likes the person with ID2</li>
+  <li>Suppose each person can only like one person</li>
+</ol>
+
+<p><strong>Should we have a key/keys for this table? If so, what type of key/keys?</strong></p>
+
+<p><code class="language-plaintext highlighter-rouge">people_friends</code> should based on:</p>
+
+<ol>
+  <li>ID1 and ID2 should from people_main table</li>
+  <li>ID1 != ID2</li>
+  <li>If person with ID1 is friend with ID2, the revers should also be true</li>
+</ol>
+
+<p><strong>How about people_friends?</strong></p>
+
+<hr />
+
+  </div>
+</div>
+
+<script type="text/javascript"
+        src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS_CHTML"></script>
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+tex2jax: {
+inlineMath: [['$','$'], ['\\(','\\)']],
+processEscapes: true},
+jax: ["input/TeX","input/MathML","input/AsciiMath","output/CommonHTML"],
+extensions: ["tex2jax.js","mml2jax.js","asciimath2jax.js","MathMenu.js","MathZoom.js","AssistiveMML.js", "[Contrib]/a11y/accessibility-menu.js"],
+TeX: {
+extensions: ["AMSmath.js","AMSsymbols.js","noErrors.js","noUndefined.js"],
+equationNumbers: {
+autoNumber: "AMS"
+}
+}
+});
+</script>
+      </div>
+      <hr>
+      <footer>
+        <p>
+          <!-- start of footer -->
+          Fall 2020 &nbsp;-&nbsp;
+          <a href="http://mlqmlq.github.io">Linquan Ma</a>
+          <!-- end of footer -->
+        </small></p>
+      </footer>
+
+    </div>
+
+    
+  </body>
+</html>
+

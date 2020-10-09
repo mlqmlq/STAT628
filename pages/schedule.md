@@ -16,11 +16,16 @@ Will get updated each week, refresh your browser!
 
 ---
 <p></p>
+#### [Discussion 5](d5.html) (10/07 & 10/09)
+
+- SQL tutorial
+
+---
+<p></p>
 #### [Discussion 4](d4.html) (09/30 & 10/02)
 
 - Rubrics for Module 1
 - Nonlinear Optimization
-
 
 ---
 <p></p>
