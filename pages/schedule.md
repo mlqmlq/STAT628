@@ -16,7 +16,7 @@ Will get updated each week, refresh your browser!
 
 ---
 <p></p>
-#### [Discussion 5](d5.html) (10/07 & 10/09)
+#### [Discussion 5](d5.html) (10/14 & 10/16)
 
 - SQL tutorial
 
