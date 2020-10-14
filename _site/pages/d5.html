@@ -152,19 +152,19 @@ select * from people_main;
 
 <ul>
   <li><strong>SELECT</strong>  - extracts data from a database</li>
-  <li><strong>UPDATE</strong> - updates data in a database</li>
-  <li><strong>DELETE</strong> - deletes data from a database</li>
   <li><strong>INSERT INTO</strong> - inserts new data into a database</li>
+  <li><strong>DELETE</strong> - deletes data from a database</li>
   <li><strong>CREATE TABLE</strong> - creates a new table</li>
+  <li><strong>AGGREGATE FUNCTIONS</strong> - e.g. <code class="language-plaintext highlighter-rouge">AVG</code>, <code class="language-plaintext highlighter-rouge">COUNT</code>, <code class="language-plaintext highlighter-rouge">MAX</code>, <code class="language-plaintext highlighter-rouge">MIN</code>, <code class="language-plaintext highlighter-rouge">SUM</code>…</li>
   <li><strong>GROUP BY</strong> - groups rows that have the same values</li>
   <li><strong>JOIN</strong> - combine rows from two or more tables</li>
+  <li><strong>WITH</strong> - give a sub-query block a name</li>
   <li><strong>UNION</strong> - combine the result-set of two or more SELECT statements</li>
 </ul>
 
 <p>Note: SQL keywords are NOT case sensitive: select is the same as SELECT, and some database systems require a semicolon at the end of each SQL statement.</p>
 
 <h3 id="select">SELECT</h3>
-<p>Syntax:</p>
 <div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">SELECT</span> <span class="n">column1</span><span class="p">,</span> <span class="n">column2</span><span class="p">,</span> <span class="p">...</span>
 <span class="k">FROM</span> <span class="k">table_name</span><span class="p">;</span>
 </code></pre></div></div>
@@ -205,6 +205,27 @@ select * from people_main;
 </code></pre></div></div>
 
 <h3 id="exercise">Exercise</h3>
+<p>Select columns <code class="language-plaintext highlighter-rouge">name</code>, <code class="language-plaintext highlighter-rouge">age</code> and <code class="language-plaintext highlighter-rouge">occupation</code> from <code class="language-plaintext highlighter-rouge">people_main</code> whose <code class="language-plaintext highlighter-rouge">occupation</code> is Chefs or Librarians, and sort the output by age in the decreasing order.</p>
+
+<h3 id="insert-into">Insert into</h3>
+<p>The INSERT INTO statement is used to insert new records in a table.</p>
+
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">INSERT</span> <span class="k">INTO</span> <span class="k">table_name</span>
+<span class="k">VALUES</span> <span class="p">(</span><span class="n">value1</span><span class="p">,</span> <span class="n">value2</span><span class="p">,</span> <span class="n">value3</span><span class="p">,</span> <span class="p">...);</span>
+</code></pre></div></div>
+
+<h3 id="exercise-1">Exercise</h3>
+<p>Insert a new record where <code class="language-plaintext highlighter-rouge">ID = 101</code>, <code class="language-plaintext highlighter-rouge">name = Linquan Ma</code>, <code class="language-plaintext highlighter-rouge">occupation = TA</code>, <code class="language-plaintext highlighter-rouge">age = 23</code>.</p>
+
+<h3 id="delete">DELETE</h3>
+<p>The DELETE statement is used to delete existing records in a table.</p>
+
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">DELETE</span> <span class="k">FROM</span> <span class="k">table_name</span> <span class="k">WHERE</span> <span class="n">condition</span><span class="p">;</span>
+</code></pre></div></div>
+
+<p>For example, we can do</p>
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">DELETE</span> <span class="k">FROM</span> <span class="n">people_main</span> <span class="k">where</span> <span class="n">ID</span> <span class="o">=</span> <span class="mi">101</span><span class="p">;</span>
+</code></pre></div></div>
 
 <h3 id="create-a-table">Create a TABLE</h3>
 
@@ -219,38 +240,13 @@ select * from people_main;
    <span class="p">....</span>
 <span class="p">);</span>
 </code></pre></div></div>
-<p>In Python, if you want to run a sql command, you need to pass a string to <code class="language-plaintext highlighter-rouge">cursor.execute(SQL_COMMAND: string)</code></p>
-
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># Python3
-</span>
-<span class="n">command</span> <span class="o">=</span> <span class="s">"""
-CREATE TABLE table_name (
-    column1 datatype,
-    column2 datatype,
-    column3 datatype,
-   ....
-);
-"""</span>
-<span class="n">cursor_obj</span><span class="p">.</span><span class="n">execute</span><span class="p">(</span><span class="n">command</span><span class="p">)</span>
-</code></pre></div></div>
 
 <h3 id="show-tables-in-current-database">Show tables in current database</h3>
 
-<p>To show tables, in sqlite3 console you can use <code class="language-plaintext highlighter-rouge">.tables</code>, more command from <code class="language-plaintext highlighter-rouge">.help</code></p>
-
+<p>To show tables, in sqlite3 console you can use</p>
 <div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">--SQLite3</span>
-
-<span class="p">.</span><span class="n">tables</span>
-</code></pre></div></div>
-
-<p>or</p>
-
-<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">--SQLite3</span>
-
 <span class="k">SELECT</span> <span class="n">name</span> <span class="k">FROM</span> <span class="n">sqlite_master</span> <span class="k">WHERE</span> <span class="k">type</span><span class="o">=</span><span class="s1">'table'</span><span class="p">;</span>
 </code></pre></div></div>
-
-<p>Here the <code class="language-plaintext highlighter-rouge">SELECT</code> command is select object from database, once you executing a <code class="language-plaintext highlighter-rouge">SELECT</code> statement.</p>
 
 <p>Equivalent, in python, we can do</p>
 
@@ -261,28 +257,95 @@ CREATE TABLE table_name (
 <span class="k">print</span><span class="p">(</span><span class="n">cursor_obj</span><span class="p">.</span><span class="n">fetchall</span><span class="p">())</span>
 </code></pre></div></div>
 
-<p>You can either treat the cursor as an <a href="https://docs.python.org/3/glossary.html#term-iterator">iterator</a>, call the cursor’s <a href="https://docs.python.org/3/library/sqlite3.html#sqlite3.Cursor.fetchone">fetchone()</a> method to retrieve a single matching row, or call <a href="https://docs.python.org/3/library/sqlite3.html#sqlite3.Cursor.fetchall">fetchall()</a> to get a list of the matching rows.</p>
-
-<h3 id="insert-one-record-in-database">Insert one record in database</h3>
-
-<p>Once we create our base table, we can start insert records into the database.</p>
-
-<p>In sqlite3, it is possible to write the <code class="language-plaintext highlighter-rouge">INSERT INTO</code> statement in two ways.</p>
-
-<p>The first way specifies both the column names and the values to be inserted:</p>
-
-<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">--SQLite3</span>
-
-<span class="k">INSERT</span> <span class="k">INTO</span> <span class="k">table_name</span> <span class="p">(</span><span class="n">column1</span><span class="p">,</span> <span class="n">column2</span><span class="p">,</span> <span class="n">column3</span><span class="p">,</span> <span class="p">...)</span>
-<span class="k">VALUES</span> <span class="p">(</span><span class="n">value1</span><span class="p">,</span> <span class="n">value2</span><span class="p">,</span> <span class="n">value3</span><span class="p">,</span> <span class="p">...);</span>
+<h3 id="aggregate-functions">Aggregate Functions</h3>
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">SELECT</span> <span class="k">MIN</span><span class="o">|</span><span class="k">MAX</span><span class="o">|</span><span class="k">COUNT</span><span class="o">|</span><span class="k">AVG</span><span class="o">|</span><span class="k">SUM</span><span class="p">(</span><span class="k">column_name</span><span class="p">)</span>
+<span class="k">FROM</span> <span class="k">table_name</span>
+<span class="k">WHERE</span> <span class="n">condition</span><span class="p">;</span>
+</code></pre></div></div>
+<p>We can use aggregate functions in varies ways. For example, by using <code class="language-plaintext highlighter-rouge">COUNT</code>, we can easily get the number of rows in a table:</p>
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">SELECT</span> <span class="k">COUNT</span><span class="p">(</span><span class="n">ID</span><span class="p">)</span> <span class="k">FROM</span> <span class="n">people_main</span><span class="p">;</span>
 </code></pre></div></div>
 
-<p>or</p>
+<h3 id="group-by">GROUP BY</h3>
+<p>The <code class="language-plaintext highlighter-rouge">GROUP BY</code> statement groups rows that have the same values into summary rows, like “find the number of people in each occupation”. The GROUP BY statement is often used with aggregate functions (COUNT, MAX, MIN, SUM, AVG) to group the result-set by one or more columns.</p>
 
-<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">--SQLite3</span>
+<p>For example, the following query counts the number of people in each occupation:</p>
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">SELECT</span> <span class="k">count</span><span class="p">(</span><span class="n">ID</span><span class="p">),</span> <span class="n">occupation</span> <span class="k">FROM</span> <span class="n">people_main</span>
+<span class="k">GROUP</span> <span class="k">BY</span> <span class="n">occupation</span><span class="p">;</span>
+</code></pre></div></div>
+<h3 id="join">JOIN</h3>
+<p>A <code class="language-plaintext highlighter-rouge">JOIN</code> clause is used to combine rows from two or more tables, based on a related column between them.</p>
 
-<span class="k">INSERT</span> <span class="k">INTO</span> <span class="k">table_name</span>
-<span class="k">VALUES</span> <span class="p">(</span><span class="n">value1</span><span class="p">,</span> <span class="n">value2</span><span class="p">,</span> <span class="n">value3</span><span class="p">,</span> <span class="p">...);</span>
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">SELECT</span> <span class="k">column_name</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>
+<span class="k">FROM</span> <span class="n">table1</span>
+<span class="p">(</span><span class="k">INNER</span><span class="p">)</span> <span class="k">JOIN</span> <span class="n">table2</span>
+<span class="k">ON</span> <span class="n">table1</span><span class="p">.</span><span class="k">column_name</span> <span class="o">=</span> <span class="n">table2</span><span class="p">.</span><span class="k">column_name</span><span class="p">;</span>
+</code></pre></div></div>
+
+<p>The table <code class="language-plaintext highlighter-rouge">people_likes</code>, based on following roles:</p>
+
+<ol>
+  <li>ID1 and ID2 should from people_main table</li>
+  <li>ID1 likes the person with ID2</li>
+</ol>
+
+<p>Let’s look at a selection from the <code class="language-plaintext highlighter-rouge">people_main</code> table:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code> (1, 'Pheonix Chambers', 'Chefs', 35),
+ (2, 'Shaquille Mcintosh', 'Librarians', 29),
+ (3, 'Lailanie Mcfarland', 'Principals', 26),
+ (4, 'Melana Christian', 'Receptionists', 32),
+ (5, 'Nareh Li', 'Security Guard', 36),
+ (6, 'Melena Combs', 'Coaches/Instructors', 43),
+ ...
+</code></pre></div></div>
+<p>Then, look at a selection from the “people_likes” table:</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code> (1, 29),
+ (4, 74),
+ (4, 100),
+ (5, 84),
+ (7, 26),
+ (8, 59),
+ ...
+</code></pre></div></div>
+<p>Notice that the <code class="language-plaintext highlighter-rouge">ID</code> column in the <code class="language-plaintext highlighter-rouge">people_main</code> table refers to <code class="language-plaintext highlighter-rouge">ID1</code> (or <code class="language-plaintext highlighter-rouge">ID2</code>) in the “people_likes” table.</p>
+
+<p>Then, we can create the following SQL statement that selects records that have matching values in both tables:</p>
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="n">people_main</span>
+<span class="k">JOIN</span> <span class="n">people_likes</span> <span class="k">on</span> <span class="n">people_main</span><span class="p">.</span><span class="n">ID</span> <span class="o">=</span> <span class="n">people_likes</span><span class="p">.</span><span class="n">ID1</span>
+<span class="k">ORDER</span> <span class="k">BY</span> <span class="n">people_main</span><span class="p">.</span><span class="n">ID</span>
+<span class="k">LIMIT</span> <span class="mi">10</span><span class="p">;</span>
+</code></pre></div></div>
+<p>Output:</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code> (1, 'Pheonix Chambers', 'Chefs', 35, 1, 29),
+ (4, 'Melana Christian', 'Receptionists', 32, 4, 74),
+ (4, 'Melana Christian', 'Receptionists', 32, 4, 100),
+ (5, 'Nareh Li', 'Security Guard', 36, 5, 84),
+ (7, 'Armondo Ortega', 'Opticians', 42, 7, 26),
+ (8, 'Camryn Hart', 'Executives', 39, 8, 59),
+ (9, 'Loren Oneal', 'Physios', 30, 9, 28),
+ (11, 'Joas Thompson', 'Journalists (Not covering war)', 45, 11, 67),
+ (11, 'Joas Thompson', 'Journalists (Not covering war)', 45, 11, 67),
+ (11, 'Joas Thompson', 'Journalists (Not covering war)', 45, 11, 41)
+</code></pre></div></div>
+<p><strong>Different types of JOIN</strong>
+<img src="../assets/notesFigs/SQL_join.png" width="600" /></p>
+
+<h3 id="exercise-2">Exercise</h3>
+<p>Write a SQL statement that returns the name and number of people that he likes. Results should be ordered by count (descending), and then by name (A-Z).</p>
+
+<h3 id="with">WITH</h3>
+<p>Often times, we want to combine two tables, but one of the tables is the result of another calculation.</p>
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">WITH</span> <span class="n">previous_results</span> <span class="k">AS</span> <span class="p">(</span>
+   <span class="k">SELECT</span> <span class="p">...</span>
+   <span class="p">...</span>
+   <span class="p">...</span>
+   <span class="p">...</span>
+<span class="p">)</span>
+<span class="k">SELECT</span> <span class="o">*</span>
+<span class="k">FROM</span> <span class="n">previous_results</span>
+<span class="k">JOIN</span> <span class="n">customers</span>
+  <span class="k">ON</span> <span class="n">_____</span> <span class="o">=</span> <span class="n">_____</span><span class="p">;</span>
 </code></pre></div></div>
 
 <h2 id="relational-database">Relational database</h2>
@@ -298,14 +361,6 @@ CREATE TABLE table_name (
 <p>Link TABLES together!</p>
 
 <h3 id="practice">Practice</h3>
-
-<p>The table <code class="language-plaintext highlighter-rouge">people_likes</code>, based on following roles:</p>
-
-<ol>
-  <li>ID1 and ID2 should from people_main table</li>
-  <li>ID1 likes the person with ID2</li>
-  <li>Suppose each person can only like one person</li>
-</ol>
 
 <p><code class="language-plaintext highlighter-rouge">people_friends</code> should based on:</p>
 
