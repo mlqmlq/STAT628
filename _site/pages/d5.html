@@ -86,9 +86,9 @@
 
 <p><img src="../assets/notesFigs/ss5.png" width="600" /></p>
 
-<p>They all require you to know how to write SQL queries. However, most of them only require a basic understanding of SQL. That’s what we are going to do today :)</p>
+<p>They all require you to know how to write SQL queries. However, most of them only require a basic understanding of SQL. That’s what we are going to do today :) The content of today’s discussion follows more or less the turotial <a href="https://www.w3schools.com/sql/default.asp">here</a>.</p>
 
-<h2 id="data-types-in-sql">Data types in SQL:</h2>
+<h2 id="data-types-in-sql">Data types in SQL</h2>
 
 <p>Some of the most common data types are:</p>
 
@@ -99,9 +99,9 @@
   <li><code class="language-plaintext highlighter-rouge">REAL</code>: a decimal value</li>
 </ul>
 
-<p><img src="../assets/notesFigs/sql-data-types.png" alt="" /></p>
+<p><img src="../assets/notesFigs/sql-data-types.png" width="600" /></p>
 
-<h2 id="relational-database-dbms">Relational Database (DBMS):</h2>
+<h2 id="relational-database-dbms">Relational Database (DBMS)</h2>
 <p>A DBMS is a software that interacts with a database. It can perform the following operations:</p>
 <ul>
   <li>Managing the access of a database</li>
@@ -123,7 +123,8 @@
 
 <p>Once you have a <a href="https://docs.python.org/3/library/sqlite3.html#sqlite3.Connection">Connection</a>, you can create a <a href="https://docs.python.org/3/library/sqlite3.html#sqlite3.Cursor">Cursor</a> object and call its <a href="https://docs.python.org/3/library/sqlite3.html#sqlite3.Cursor.execute">execute()</a> method to perform SQL commands. Also, you can use <code class="language-plaintext highlighter-rouge">fetchall()</code> command to get the results. Otherwise, you are merely displaying the <em>representation of the method</em>.</p>
 
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">sqlite3</span>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># Python3
+</span><span class="kn">import</span> <span class="nn">sqlite3</span>
 <span class="n">conn</span> <span class="o">=</span> <span class="n">sqlite3</span><span class="p">.</span><span class="n">connect</span><span class="p">(</span><span class="n">NAME</span><span class="p">)</span>
 <span class="n">cursor_obj</span> <span class="o">=</span> <span class="n">conn</span><span class="p">.</span><span class="n">cursor</span><span class="p">()</span>
 <span class="n">cursor_obj</span><span class="p">.</span><span class="n">execute</span><span class="p">(</span><span class="n">SQL_COMMAND</span><span class="p">)</span>
@@ -138,13 +139,72 @@ people_friends(ID1 INTEGER, ID2 INTEGER)
 </code></pre></div></div>
 <p>Open a Python console or Jupyter Notebook and type in the following commands (don’t forget to import the <code class="language-plaintext highlighter-rouge">sqlite3</code> module):</p>
 
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">conn</span> <span class="o">=</span> <span class="n">sqlite3</span><span class="p">.</span><span class="n">connect</span><span class="p">(</span><span class="s">'people.db'</span><span class="p">)</span>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># Python3
+</span><span class="n">conn</span> <span class="o">=</span> <span class="n">sqlite3</span><span class="p">.</span><span class="n">connect</span><span class="p">(</span><span class="s">'people.db'</span><span class="p">)</span>
 <span class="n">cursor_obj</span> <span class="o">=</span> <span class="n">conn</span><span class="p">.</span><span class="n">cursor</span><span class="p">()</span>
 <span class="n">cursor_obj</span><span class="p">.</span><span class="n">execute</span><span class="p">(</span><span class="s">'''
 select * from people_main;
 '''</span><span class="p">)</span>
 <span class="n">cursor_obj</span><span class="p">.</span><span class="n">fetchall</span><span class="p">()[</span><span class="mi">1</span><span class="p">:</span><span class="mi">10</span><span class="p">]</span>
 </code></pre></div></div>
+<h2 id="sql-syntax">SQL Syntax</h2>
+<p>Here are the most commonly used commands, and I will introduce them one by one:</p>
+
+<ul>
+  <li><strong>SELECT</strong>  - extracts data from a database</li>
+  <li><strong>UPDATE</strong> - updates data in a database</li>
+  <li><strong>DELETE</strong> - deletes data from a database</li>
+  <li><strong>INSERT INTO</strong> - inserts new data into a database</li>
+  <li><strong>CREATE TABLE</strong> - creates a new table</li>
+  <li><strong>GROUP BY</strong> - groups rows that have the same values</li>
+  <li><strong>JOIN</strong> - combine rows from two or more tables</li>
+  <li><strong>UNION</strong> - combine the result-set of two or more SELECT statements</li>
+</ul>
+
+<p>Note: SQL keywords are NOT case sensitive: select is the same as SELECT, and some database systems require a semicolon at the end of each SQL statement.</p>
+
+<h3 id="select">SELECT</h3>
+<p>Syntax:</p>
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">SELECT</span> <span class="n">column1</span><span class="p">,</span> <span class="n">column2</span><span class="p">,</span> <span class="p">...</span>
+<span class="k">FROM</span> <span class="k">table_name</span><span class="p">;</span>
+</code></pre></div></div>
+<p>Select all</p>
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="k">table_name</span><span class="p">;</span>
+</code></pre></div></div>
+<p><strong>SELECT DISTINCT</strong>:</p>
+
+<p>The SELECT DISTINCT statement is used to return only distinct (different) values.</p>
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">SELECT</span> <span class="k">DISTINCT</span> <span class="n">column1</span><span class="p">,</span> <span class="n">column2</span><span class="p">,</span> <span class="p">...</span>
+<span class="k">FROM</span> <span class="k">table_name</span><span class="p">;</span>
+</code></pre></div></div>
+<p><strong>WHERE</strong></p>
+
+<p>The WHERE clause is used to filter records.</p>
+
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">SELECT</span> <span class="n">column1</span><span class="p">,</span> <span class="n">column2</span><span class="p">,</span> <span class="p">...</span>
+<span class="k">FROM</span> <span class="k">table_name</span>
+<span class="k">WHERE</span> <span class="n">condition</span><span class="p">;</span>
+</code></pre></div></div>
+
+<p><strong>AND/OR/NOT</strong>:</p>
+
+<p>The WHERE clause can be combined with AND, OR, and NOT operators.</p>
+
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">SELECT</span> <span class="n">column1</span><span class="p">,</span> <span class="n">column2</span><span class="p">,</span> <span class="p">...</span>
+<span class="k">FROM</span> <span class="k">table_name</span>
+<span class="k">WHERE</span> <span class="p">(</span><span class="k">NOT</span><span class="p">)</span> <span class="n">condition1</span> <span class="k">AND</span><span class="o">/</span><span class="k">OR</span> <span class="n">condition2</span><span class="p">;</span>
+</code></pre></div></div>
+
+<p><strong>ORDER BY</strong></p>
+
+<p>The ORDER BY keyword is used to sort the result-set in ascending or descending order.</p>
+
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">SELECT</span> <span class="n">column1</span><span class="p">,</span> <span class="n">column2</span><span class="p">,</span> <span class="p">...</span>
+<span class="k">FROM</span> <span class="k">table_name</span>
+<span class="k">ORDER</span> <span class="k">BY</span> <span class="n">column1</span><span class="p">,</span> <span class="n">column2</span><span class="p">,</span> <span class="p">...</span> <span class="k">ASC</span><span class="o">|</span><span class="k">DESC</span><span class="p">;</span>
+</code></pre></div></div>
+
+<h3 id="exercise">Exercise</h3>
 
 <h3 id="create-a-table">Create a TABLE</h3>
 
@@ -233,43 +293,11 @@ CREATE TABLE table_name (
 
 <p><a href="https://www.w3schools.com/sql/sql_foreignkey.asp"><strong>Foreign key</strong></a> is a field in database table that is Primary key in another table. It can accept multiple null, duplicate values. For more help refer the article <a href="http://www.dotnettricks.com/learn/sqlserver/difference-between-primary-key-and-foreign-key">Difference between primary key and foreign key</a>.</p>
 
-<p><strong>Consider if you are hiring by amazon, how did you manage amazon data? how many tables do you need, how to link them together?</strong></p>
-
-<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">--SQLite3</span>
-
-<span class="k">CREATE</span> <span class="k">TABLE</span> <span class="n">Customers</span> <span class="p">(</span>
-    <span class="n">CustomerID</span> <span class="nb">INT</span> <span class="k">PRIMARY</span> <span class="k">KEY</span><span class="p">,</span>
-    <span class="n">Name</span> <span class="nb">VARCHAR</span><span class="p">(</span><span class="mi">1000</span><span class="p">)</span>
-<span class="p">);</span>
-
-<span class="k">CREATE</span> <span class="k">TABLE</span> <span class="n">Products</span> <span class="p">(</span>
-    <span class="n">ProductID</span> <span class="nb">INT</span> <span class="k">PRIMARY</span> <span class="k">KEY</span><span class="p">,</span>
-    <span class="n">price</span> <span class="nb">NUMERIC</span><span class="p">,</span>
-    <span class="n">original</span> <span class="nb">VARCHAR</span><span class="p">(</span><span class="mi">1000</span><span class="p">)</span>
-<span class="p">);</span>
-
-<span class="k">CREATE</span> <span class="k">TABLE</span> <span class="n">Orders</span> <span class="p">(</span>
-    <span class="n">OrderID</span> <span class="nb">INT</span> <span class="k">PRIMARY</span> <span class="k">KEY</span><span class="p">,</span>
-    <span class="k">size</span> <span class="nb">INT</span><span class="p">,</span>
-    <span class="n">CustomerID</span> <span class="nb">INT</span><span class="p">,</span> 
-    <span class="n">ProductID</span> <span class="nb">INT</span><span class="p">,</span> 
-    <span class="k">FOREIGN</span> <span class="k">KEY</span> <span class="p">(</span><span class="n">CustomerID</span><span class="p">)</span> <span class="k">REFERENCES</span> <span class="n">Customers</span><span class="p">(</span><span class="n">CustomerID</span><span class="p">),</span>
-    <span class="k">FOREIGN</span> <span class="k">KEY</span> <span class="p">(</span><span class="n">ProductID</span><span class="p">)</span> <span class="k">REFERENCES</span> <span class="n">Products</span><span class="p">(</span><span class="n">ProductID</span><span class="p">)</span>
-<span class="p">);</span>
-</code></pre></div></div>
-
 <h3 id="why">Why?</h3>
 
 <p>Link TABLES together!</p>
 
 <h3 id="practice">Practice</h3>
-
-<p>In the <a href="https://cs.brown.edu/courses/csci1951-a/assignments/sql.html">Assignment</a>, there is a database named people.db,</p>
-
-<ol>
-  <li>Create table <code class="language-plaintext highlighter-rouge">people_main</code>, <code class="language-plaintext highlighter-rouge">people_likes</code> and <code class="language-plaintext highlighter-rouge">people_friends</code>.</li>
-  <li>Consider what is the primary key in <code class="language-plaintext highlighter-rouge">people_main</code>.</li>
-</ol>
 
 <p>The table <code class="language-plaintext highlighter-rouge">people_likes</code>, based on following roles:</p>
 
@@ -279,8 +307,6 @@ CREATE TABLE table_name (
   <li>Suppose each person can only like one person</li>
 </ol>
 
-<p><strong>Should we have a key/keys for this table? If so, what type of key/keys?</strong></p>
-
 <p><code class="language-plaintext highlighter-rouge">people_friends</code> should based on:</p>
 
 <ol>
@@ -288,8 +314,6 @@ CREATE TABLE table_name (
   <li>ID1 != ID2</li>
   <li>If person with ID1 is friend with ID2, the revers should also be true</li>
 </ol>
-
-<p><strong>How about people_friends?</strong></p>
 
 <hr />
 
