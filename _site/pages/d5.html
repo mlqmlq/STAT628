@@ -160,6 +160,7 @@ select * from people_main;
   <li><strong>JOIN</strong> - combine rows from two or more tables</li>
   <li><strong>WITH</strong> - give a sub-query block a name</li>
   <li><strong>UNION</strong> - combine the result-set of two or more SELECT statements</li>
+  <li><strong>HAVING</strong> - apply conditions over aggregation functions</li>
 </ul>
 
 <p>Note: SQL keywords are NOT case sensitive: select is the same as SELECT, and some database systems require a semicolon at the end of each SQL statement.</p>
@@ -328,14 +329,33 @@ select * from people_main;
  (11, 'Joas Thompson', 'Journalists (Not covering war)', 45, 11, 67),
  (11, 'Joas Thompson', 'Journalists (Not covering war)', 45, 11, 41)
 </code></pre></div></div>
-<p><strong>Different types of JOIN</strong>
-<img src="../assets/notesFigs/SQL_join.png" width="600" /></p>
+<p><strong>Different types of JOIN</strong></p>
 
-<h3 id="exercise-2">Exercise</h3>
-<p>Write a SQL statement that returns the name and number of people that he likes. Results should be ordered by count (descending), and then by name (A-Z).</p>
+<p><img src="../assets/notesFigs/SQL_join.png" width="600" /></p>
+
+<h3 id="exercises">Exercises</h3>
+<ul>
+  <li>Write a SQL statement that returns the name and number of people that he likes. Results should be ordered by count (descending), and then by name (A-Z).</li>
+</ul>
+
+<p><em>Hint: First use <code class="language-plaintext highlighter-rouge">JOIN</code> to combine the two tables <code class="language-plaintext highlighter-rouge">people_main</code> and <code class="language-plaintext highlighter-rouge">people_likes</code>, and then use <code class="language-plaintext highlighter-rouge">GROUP BY</code> followed by <code class="language-plaintext highlighter-rouge">COUNT</code>.</em></p>
+
+<p>Consider the table <code class="language-plaintext highlighter-rouge">people_friends</code>, <code class="language-plaintext highlighter-rouge">(ID1, ID2)</code> simply means they are friends with each other. The enries satisfy</p>
+
+<ol>
+  <li>ID1 and ID2 should from people_main table</li>
+  <li>ID1 != ID2</li>
+  <li>If person with ID1 is friend with ID2, the revers should also be true</li>
+</ol>
+
+<ul>
+  <li>Write a SQL statement to find pairs (A, B) such that person A likes person B, but A is not friends with B. Results should be ordered by ID1 (ascending), then ID2 (ascending).</li>
+</ul>
+
+<p><em>Hint: consider <code class="language-plaintext highlighter-rouge">left join</code>.</em></p>
 
 <h3 id="with">WITH</h3>
-<p>Often times, we want to combine two tables, but one of the tables is the result of another calculation.</p>
+<p>Often times, we want to combine two tables, but one of the tables is the result of another query.</p>
 <div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">WITH</span> <span class="n">previous_results</span> <span class="k">AS</span> <span class="p">(</span>
    <span class="k">SELECT</span> <span class="p">...</span>
    <span class="p">...</span>
@@ -344,9 +364,49 @@ select * from people_main;
 <span class="p">)</span>
 <span class="k">SELECT</span> <span class="o">*</span>
 <span class="k">FROM</span> <span class="n">previous_results</span>
-<span class="k">JOIN</span> <span class="n">customers</span>
-  <span class="k">ON</span> <span class="n">_____</span> <span class="o">=</span> <span class="n">_____</span><span class="p">;</span>
+<span class="k">JOIN</span> <span class="n">people_main</span>
+  <span class="k">ON</span> <span class="n">previous_results</span><span class="p">.</span><span class="n">__</span> <span class="o">=</span> <span class="n">people_main</span><span class="p">.</span><span class="n">__</span><span class="p">;</span>
 </code></pre></div></div>
+
+<h3 id="exercises-1">Exercises</h3>
+<ul>
+  <li>Write a SQL statement to find pairs (A, B) such that person A likes B</li>
+</ul>
+
+<p><em>Hint: first join people_main.ID with people_likes.ID1, then join output.ID2 with people_main.ID again. In this way, the first name likes the second name</em></p>
+
+<ul>
+  <li>Write a SQL statement that returns the occupation and and how many people like that occupation. Results should be ordered by popularity from high to low</li>
+</ul>
+
+<p><em>Hint: First join people_main with people_likes, then run group by command with count</em></p>
+
+<ul>
+  <li>Write a SQL statement that returns the distinct name and age of all people who are liked by anyone younger than them. Results should be ordered by name (A-Z)</li>
+</ul>
+
+<h3 id="union">UNION</h3>
+<p>The UNION operator is used to combine the result-set of two or more SELECT statements.</p>
+
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">SELECT</span> <span class="k">column_name</span><span class="p">(</span><span class="n">s</span><span class="p">)</span> <span class="k">FROM</span> <span class="n">table1</span>
+<span class="k">UNION</span>
+<span class="k">SELECT</span> <span class="k">column_name</span><span class="p">(</span><span class="n">s</span><span class="p">)</span> <span class="k">FROM</span> <span class="n">table2</span><span class="p">;</span>
+</code></pre></div></div>
+
+<h3 id="having">HAVING</h3>
+<p>The HAVING clause was added to SQL because the WHERE keyword could not be used with aggregate functions.</p>
+
+<p>Example, if I want to know the occupations that have more than 5 people, we can write the query as</p>
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">SELECT</span> <span class="n">occupation</span><span class="p">,</span> <span class="k">count</span><span class="p">(</span><span class="o">*</span><span class="p">)</span> <span class="k">FROM</span> <span class="n">people_main</span>
+<span class="k">GROUP</span> <span class="k">BY</span> <span class="n">occupation</span>
+<span class="k">having</span> <span class="k">count</span><span class="p">(</span><span class="o">*</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">5</span><span class="p">;</span>
+</code></pre></div></div>
+<h3 id="exercise-2">Exercise:</h3>
+<ul>
+  <li>Write a SQL statement that returns the name and occupation of all people who have more than 3 friends.</li>
+</ul>
+
+<p><em>Consider using <code class="language-plaintext highlighter-rouge">JOIN</code>, <code class="language-plaintext highlighter-rouge">GROUP BY</code>, <code class="language-plaintext highlighter-rouge">COUNT</code> and <code class="language-plaintext highlighter-rouge">HSVING</code></em></p>
 
 <h2 id="relational-database">Relational database</h2>
 
@@ -356,19 +416,64 @@ select * from people_main;
 
 <p><a href="https://www.w3schools.com/sql/sql_foreignkey.asp"><strong>Foreign key</strong></a> is a field in database table that is Primary key in another table. It can accept multiple null, duplicate values. For more help refer the article <a href="http://www.dotnettricks.com/learn/sqlserver/difference-between-primary-key-and-foreign-key">Difference between primary key and foreign key</a>.</p>
 
-<h3 id="why">Why?</h3>
+<h2 id="practice">Practice</h2>
+<p>Consider the following relational schema:</p>
 
-<p>Link TABLES together!</p>
+<p><img src="../assets/notesFigs/computer-store-db.png" width="600" /></p>
 
-<h3 id="practice">Practice</h3>
+<p>PK and FK stand for primary key and foreign key respectively.</p>
 
-<p><code class="language-plaintext highlighter-rouge">people_friends</code> should based on:</p>
+<p>We first generate the tables using the following code:</p>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># In Python
+</span><span class="n">conn</span> <span class="o">=</span> <span class="n">sqlite3</span><span class="p">.</span><span class="n">connect</span><span class="p">(</span><span class="s">'computer.db'</span><span class="p">)</span>
+<span class="n">cursor_obj</span> <span class="o">=</span> <span class="n">conn</span><span class="p">.</span><span class="n">cursor</span><span class="p">()</span>
+<span class="n">cursor_obj</span><span class="p">.</span><span class="n">execute</span><span class="p">(</span><span class="s">'''
+CREATE TABLE Manufacturers (
+	Code INTEGER PRIMARY KEY NOT NULL,
+	Name CHAR(50) NOT NULL 
+);
+'''</span><span class="p">)</span>
+<span class="n">cursor_obj</span><span class="p">.</span><span class="n">execute</span><span class="p">(</span><span class="s">'''
+CREATE TABLE Products (
+	Code INTEGER PRIMARY KEY NOT NULL,
+	Name CHAR(50) NOT NULL ,
+	Price REAL NOT NULL ,
+	Manufacturer INTEGER NOT NULL 
+		CONSTRAINT fk_Manufacturers_Code REFERENCES Manufacturers(Code)
+);
+'''</span><span class="p">)</span>
+<span class="n">cursor_obj</span><span class="p">.</span><span class="n">execute</span><span class="p">(</span><span class="s">'''
+INSERT INTO Manufacturers(Code,Name) VALUES (1,'Sony'),
+                                    (2,'Creative Labs'),
+                                    (3,'Hewlett-Packard'),
+                                    (4,'Iomega'),
+                                    (5,'Fujitsu'),
+                                    (6,'Winchester');   
+'''</span><span class="p">)</span>
+<span class="n">cursor_obj</span><span class="p">.</span><span class="n">execute</span><span class="p">(</span><span class="s">'''
+INSERT INTO Products(Code,Name,Price,Manufacturer) VALUES
+(1,'Hard drive',240,5),
+(2,'Memory',120,6),
+(3,'ZIP drive',150,4),
+(4,'Floppy disk',5,6),
+(5,'Monitor',240,1),
+(6,'DVD drive',180,2),
+(7,'CD drive',90,2),
+(8,'Printer',270,3),
+(9,'Toner cartridge',66,3),
+(10,'DVD burner',180,2);
+'''</span><span class="p">)</span>
 
-<ol>
-  <li>ID1 and ID2 should from people_main table</li>
-  <li>ID1 != ID2</li>
-  <li>If person with ID1 is friend with ID2, the revers should also be true</li>
-</ol>
+</code></pre></div></div>
+<p>Now, based on the tables created, finish the following tasks:</p>
+<ul>
+  <li>Select the names and the prices of all the products in the store.</li>
+  <li>Select the name of the products with a price less than or equal to $200.</li>
+  <li>Select the name and price in cents (i.e., the price must be multiplied by 100).</li>
+  <li>Compute the average price of all the products.</li>
+  <li>Select the name and price of all products with a price larger than or equal to $180, and sort first by price (in descending order), and then by name (in ascending order).</li>
+  <li>Select the name and price of the cheapest product.</li>
+</ul>
 
 <hr />
 
