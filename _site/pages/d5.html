@@ -54,9 +54,36 @@
 
 <p>SQL, Structured Query Language, is a programming language designed to manage data stored in relational databases. SQL operates through simple, declarative statements. This keeps data accurate and secure, and helps maintain the integrity of databases, regardless of size.</p>
 
-<h2 id="relational-database">Relational database</h2>
+<h2 id="why-sql">Why SQL?</h2>
+<p>Let’s first look at some sample qualifications for the position of Data Scientist at Tech companies:</p>
+<ul>
+  <li>
+    <p>1.
+<img src="../assets/notesFigs/ss1.png" alt="" /></p>
+  </li>
+  <li>
+    <p>2.
+<img src="../assets/notesFigs/ss2.png" alt="" /></p>
+  </li>
+  <li>
+    <p>3.
+<img src="../assets/notesFigs/ss3.png" alt="" /></p>
+  </li>
+  <li>
+    <p>4.
+<img src="../assets/notesFigs/ss4.png" alt="" /></p>
+  </li>
+  <li>
+    <p>5.
+<img src="../assets/notesFigs/ss5.png" alt="" /></p>
+  </li>
+</ul>
 
-<p>A relational database is a database that organizes information into one or more tables. A table is a collection of data organized into rows and columns. Tables are sometimes referred to as relations. All data stored in a relational database is of a certain data type. Some of the most common data types are:</p>
+<p>They all require you to know how to write SQL queries. However, most of them only require a basic understanding of SQL. That’s what we are going to do today :)</p>
+
+<h2 id="data-types-in-sql">Data types in SQL:</h2>
+
+<p>Some of the most common data types are:</p>
 
 <ul>
   <li><code class="language-plaintext highlighter-rouge">INTEGER</code>: a positive or negative whole number</li>
@@ -67,25 +94,50 @@
 
 <p><img src="../assets/notesFigs/sql-data-types.png" alt="" /></p>
 
+<h2 id="relational-database-dbms">Relational Database (DBMS):</h2>
+<p>A DBMS is a software that interacts with a database. It can perform the following operations:</p>
+<ul>
+  <li>Managing the access of a database</li>
+  <li>Running SQL queries</li>
+  <li>Writing data into the database</li>
+  <li>Updating database</li>
+  <li>Deleting data from the database</li>
+</ul>
+
+<p>SQLite and MySQL, are the two most popular open source DBMS. We are going to use SQLite.</p>
+
 <h2 id="sqlite3-in-python">SQLite3 in Python</h2>
 
 <h3 id="start-connect-to-sqlite3-server">Start connect to sqlite3 server</h3>
 
 <p><a href="https://docs.python.org/3/library/sqlite3.html">Documentation</a></p>
 
-<p>Python is an object-oriented language <a href="https://en.wikipedia.org/wiki/Object-oriented_programming">OOP</a>, you should learn the basic concept for this term.</p>
-
 <p>To run our <code class="language-plaintext highlighter-rouge">sqlite3</code>, you need to first connect to a local/remote database via <code class="language-plaintext highlighter-rouge">.connect(NAME)</code></p>
 
 <p>Once you have a <a href="https://docs.python.org/3/library/sqlite3.html#sqlite3.Connection">Connection</a>, you can create a <a href="https://docs.python.org/3/library/sqlite3.html#sqlite3.Cursor">Cursor</a> object and call its <a href="https://docs.python.org/3/library/sqlite3.html#sqlite3.Cursor.execute">execute()</a> method to perform SQL commands. Also, you can use <code class="language-plaintext highlighter-rouge">fetchall()</code> command to get the results. Otherwise, you are merely displaying the <em>representation of the method</em>.</p>
 
-<pre><code class="language-Python"># Python3
-import sqlite3
-conn = sqlite3.connect(NAME)
-cursor_obj = conn.cursor()
-cursor_obj.execute(SQL_COMMAND)
-cursor_obj.fetchall()
-</code></pre>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">sqlite3</span>
+<span class="n">conn</span> <span class="o">=</span> <span class="n">sqlite3</span><span class="p">.</span><span class="n">connect</span><span class="p">(</span><span class="n">NAME</span><span class="p">)</span>
+<span class="n">cursor_obj</span> <span class="o">=</span> <span class="n">conn</span><span class="p">.</span><span class="n">cursor</span><span class="p">()</span>
+<span class="n">cursor_obj</span><span class="p">.</span><span class="n">execute</span><span class="p">(</span><span class="n">SQL_COMMAND</span><span class="p">)</span>
+<span class="n">cursor_obj</span><span class="p">.</span><span class="n">fetchall</span><span class="p">()</span>
+</code></pre></div></div>
+
+<p>Firstly, let’s try on this database I created: <a href="../assets/people.db">people.db</a>. It contains the name, age, ID, and occupation of some students, as well as their relationships. Here are the tables in that database.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>people_main(ID INTEGER, name TEXT, occupation TEXT, age INTEGER)
+people_likes(ID1 INTEGER, ID2 INTEGER)
+people_friends(ID1 INTEGER, ID2 INTEGER)
+</code></pre></div></div>
+<p>Open a Python console or Jupyter Notebook and type in the following commands (don’t forget to import the <code class="language-plaintext highlighter-rouge">sqlite3</code> module):</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">conn</span> <span class="o">=</span> <span class="n">sqlite3</span><span class="p">.</span><span class="n">connect</span><span class="p">(</span><span class="s">'people.db'</span><span class="p">)</span>
+<span class="n">cursor_obj</span> <span class="o">=</span> <span class="n">conn</span><span class="p">.</span><span class="n">cursor</span><span class="p">()</span>
+<span class="n">cursor_obj</span><span class="p">.</span><span class="n">execute</span><span class="p">(</span><span class="s">'''
+select * from people_main;
+'''</span><span class="p">)</span>
+<span class="n">cursor_obj</span><span class="p">.</span><span class="n">fetchall</span><span class="p">()[</span><span class="mi">1</span><span class="p">:</span><span class="mi">10</span><span class="p">]</span>
+</code></pre></div></div>
 
 <h3 id="create-a-table">Create a TABLE</h3>
 
@@ -166,7 +218,7 @@ CREATE TABLE table_name (
 <span class="k">VALUES</span> <span class="p">(</span><span class="n">value1</span><span class="p">,</span> <span class="n">value2</span><span class="p">,</span> <span class="n">value3</span><span class="p">,</span> <span class="p">...);</span>
 </code></pre></div></div>
 
-<h2 id="relational-database-1">Relational database</h2>
+<h2 id="relational-database">Relational database</h2>
 
 <p>Different <a href="https://www.dotnettricks.com/learn/sqlserver/different-types-of-sql-keys">Key types</a></p>
 
@@ -205,12 +257,7 @@ CREATE TABLE table_name (
 
 <h3 id="practice">Practice</h3>
 
-<p>In the <a href="https://cs.brown.edu/courses/csci1951-a/assignments/sql.html">Assignment</a>, there is a database named people.db, with the name, age, ID, and occupation of some students. Here we can create these three tables by ourself.</p>
-
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>people_main(ID INTEGER, name TEXT, occupation TEXT, age INTEGER)
-people_likes(ID1 INTEGER, ID2 INTEGER)
-people_friends(ID1 INTEGER, ID2 INTEGER)
-</code></pre></div></div>
+<p>In the <a href="https://cs.brown.edu/courses/csci1951-a/assignments/sql.html">Assignment</a>, there is a database named people.db,</p>
 
 <ol>
   <li>Create table <code class="language-plaintext highlighter-rouge">people_main</code>, <code class="language-plaintext highlighter-rouge">people_likes</code> and <code class="language-plaintext highlighter-rouge">people_friends</code>.</li>
