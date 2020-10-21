@@ -16,6 +16,13 @@ Will get updated each week, refresh your browser!
 
 ---
 <p></p>
+#### [Discussion 6](d6.html) (10/21 & 10/23)
+
+- SQL exercises
+- Interview Questions 
+
+---
+<p></p>
 #### [Discussion 5](d5.html) (10/14 & 10/16)
 
 - SQL tutorial

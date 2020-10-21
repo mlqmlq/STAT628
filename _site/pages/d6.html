@@ -1,0 +1,316 @@
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Discussion 6</title>
+    <meta name="author" content="Linquan Ma">
+
+    <!-- Enable responsive viewport -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
+    <!--[if lt IE 9]>
+      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+    <!-- Le styles -->
+    <link href="http://mlqmlq.github.io/STAT628/assets/themes/twitter/bootstrap/css/bootstrap.2.2.2.min.css" rel="stylesheet">
+    <link href="http://mlqmlq.github.io/STAT628/assets/themes/twitter/css/style.css?body=1" rel="stylesheet" type="text/css" media="all">
+    <link href="http://mlqmlq.github.io/STAT628/assets/themes/twitter/css/main.css" rel="stylesheet" type="text/css" media="all">
+
+    <!-- Le fav and touch icons -->
+
+    <!-- atom & rss feed -->
+    <link href="nil" type="application/atom+xml" rel="alternate" title="Sitewide ATOM Feed">
+    <link href="nil" type="application/rss+xml" rel="alternate" title="Sitewide RSS Feed">
+
+  </head>
+
+  <body>
+    <div class="navbar">
+      <div class="navbar-inner">
+        <div class="container-narrow">
+          <a class="brand" href="/">Data Science Practicum - STAT 628 - Fall 2020</a>
+          <ul class="nav">
+              <li><a href="/pages/schedule.html">schedule</a></li>
+          </ul>
+
+        </div>
+      </div>
+    </div>
+
+    <div class="container-narrow">
+
+      <div class="content">
+        
+<div class="page-header">
+  <h2>Discussion 6 </h2>
+</div>
+
+<div class="row-fluid">
+  <div class="span12">
+    <h2 id="review-of-last-week">Review of last week</h2>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># Python3
+</span><span class="kn">import</span> <span class="nn">sqlite3</span>
+<span class="n">conn</span> <span class="o">=</span> <span class="n">sqlite3</span><span class="p">.</span><span class="n">connect</span><span class="p">(</span><span class="n">NAME</span><span class="p">)</span>
+<span class="n">cursor_obj</span> <span class="o">=</span> <span class="n">conn</span><span class="p">.</span><span class="n">cursor</span><span class="p">()</span>
+<span class="n">cursor_obj</span><span class="p">.</span><span class="n">execute</span><span class="p">(</span><span class="n">SQL_COMMAND</span><span class="p">)</span>
+<span class="n">cursor_obj</span><span class="p">.</span><span class="n">fetchall</span><span class="p">()</span>
+</code></pre></div></div>
+
+<p>Commonly used commands:</p>
+
+<ul>
+  <li><strong>SELECT</strong>  - extracts data from a database</li>
+  <li><strong>INSERT INTO</strong> - inserts new data into a database</li>
+  <li><strong>DELETE</strong> - deletes data from a database</li>
+  <li><strong>CREATE TABLE</strong> - creates a new table</li>
+  <li><strong>AGGREGATE FUNCTIONS</strong> - e.g. <code class="language-plaintext highlighter-rouge">AVG</code>, <code class="language-plaintext highlighter-rouge">COUNT</code>, <code class="language-plaintext highlighter-rouge">MAX</code>, <code class="language-plaintext highlighter-rouge">MIN</code>, <code class="language-plaintext highlighter-rouge">SUM</code>…</li>
+  <li><strong>GROUP BY</strong> - groups rows that have the same values</li>
+  <li><strong>JOIN</strong> - combine rows from two or more tables</li>
+  <li><strong>WITH</strong> - give a sub-query block a name</li>
+  <li><strong>UNION</strong> - combine the result-set of two or more SELECT statements</li>
+  <li><strong>HAVING</strong> - apply conditions over aggregation functions</li>
+</ul>
+
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">SELECT</span> <span class="n">column1</span><span class="p">,</span> <span class="n">column2</span><span class="p">,</span> <span class="p">...</span>
+<span class="k">FROM</span> <span class="k">table_name</span><span class="p">;</span>
+</code></pre></div></div>
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">SELECT</span> <span class="k">DISTINCT</span> <span class="n">column1</span><span class="p">,</span> <span class="n">column2</span><span class="p">,</span> <span class="p">...</span>
+<span class="k">FROM</span> <span class="k">table_name</span><span class="p">;</span>
+</code></pre></div></div>
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">SELECT</span> <span class="n">column1</span><span class="p">,</span> <span class="n">column2</span><span class="p">,</span> <span class="p">...</span>
+<span class="k">FROM</span> <span class="k">table_name</span>
+<span class="k">WHERE</span> <span class="n">condition</span><span class="p">;</span>
+</code></pre></div></div>
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">SELECT</span> <span class="n">column1</span><span class="p">,</span> <span class="n">column2</span><span class="p">,</span> <span class="p">...</span>
+<span class="k">FROM</span> <span class="k">table_name</span>
+<span class="k">ORDER</span> <span class="k">BY</span> <span class="n">column1</span><span class="p">,</span> <span class="n">column2</span><span class="p">,</span> <span class="p">...</span> <span class="k">ASC</span><span class="o">|</span><span class="k">DESC</span><span class="p">;</span>
+</code></pre></div></div>
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">INSERT</span> <span class="k">INTO</span> <span class="k">table_name</span>
+<span class="k">VALUES</span> <span class="p">(</span><span class="n">value1</span><span class="p">,</span> <span class="n">value2</span><span class="p">,</span> <span class="n">value3</span><span class="p">,</span> <span class="p">...);</span>
+</code></pre></div></div>
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">DELETE</span> <span class="k">FROM</span> <span class="k">table_name</span> <span class="k">WHERE</span> <span class="n">condition</span><span class="p">;</span>
+</code></pre></div></div>
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">CREATE</span> <span class="k">TABLE</span> <span class="k">table_name</span> <span class="p">(</span>
+    <span class="n">column1</span> <span class="n">datatype</span><span class="p">,</span>
+    <span class="n">column2</span> <span class="n">datatype</span><span class="p">,</span>
+    <span class="n">column3</span> <span class="n">datatype</span><span class="p">,</span>
+   <span class="p">....</span>
+<span class="p">);</span>
+</code></pre></div></div>
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">SELECT</span> <span class="k">MIN</span><span class="o">|</span><span class="k">MAX</span><span class="o">|</span><span class="k">COUNT</span><span class="o">|</span><span class="k">AVG</span><span class="o">|</span><span class="k">SUM</span><span class="p">(</span><span class="k">column_name</span><span class="p">)</span>
+<span class="k">FROM</span> <span class="k">table_name</span>
+<span class="k">WHERE</span> <span class="n">condition</span><span class="p">;</span>
+</code></pre></div></div>
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">SELECT</span> <span class="k">count</span><span class="p">(</span><span class="n">ID</span><span class="p">),</span> <span class="n">occupation</span> <span class="k">FROM</span> <span class="n">people_main</span>
+<span class="k">GROUP</span> <span class="k">BY</span> <span class="n">occupation</span><span class="p">;</span>
+</code></pre></div></div>
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">SELECT</span> <span class="k">column_name</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>
+<span class="k">FROM</span> <span class="n">table1</span>
+<span class="p">(</span><span class="k">INNER</span><span class="p">)</span> <span class="k">JOIN</span> <span class="n">table2</span>
+<span class="k">ON</span> <span class="n">table1</span><span class="p">.</span><span class="k">column_name</span> <span class="o">=</span> <span class="n">table2</span><span class="p">.</span><span class="k">column_name</span><span class="p">;</span>
+</code></pre></div></div>
+<p><strong>Different types of JOIN</strong>
+<img src="../assets/notesFigs/SQL_join2.jpeg" width="600" /></p>
+
+<p><a href="../assets/people.db">people.db</a>.</p>
+
+<p>It contains the name, age, ID, and occupation of some students, as well as their relationships. Here are the tables in that database.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>people_main(ID INTEGER, name TEXT, occupation TEXT, age INTEGER)
+people_likes(ID1 INTEGER, ID2 INTEGER)
+people_friends(ID1 INTEGER, ID2 INTEGER)
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code> (1, 'Pheonix Chambers', 'Chefs', 35),
+ (2, 'Shaquille Mcintosh', 'Librarians', 29),
+ (3, 'Lailanie Mcfarland', 'Principals', 26),
+ ...
+</code></pre></div></div>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code> (1, 29),
+ (4, 74),
+ (4, 100),
+ ...
+</code></pre></div></div>
+
+<ul>
+  <li>Write a SQL statement to find pairs (A, B) such that person A likes person B, but A is not friends with B. Results should be ordered by ID1 (ascending), then ID2 (ascending).</li>
+</ul>
+
+<p><em>Hint: consider <code class="language-plaintext highlighter-rouge">left join</code>.</em></p>
+
+<h3 id="with">WITH</h3>
+<p>Often times, we want to combine two tables, but one of the tables is the result of another query.</p>
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">WITH</span> <span class="n">previous_results</span> <span class="k">AS</span> <span class="p">(</span>
+   <span class="k">SELECT</span> <span class="p">...</span>
+   <span class="p">...</span>
+   <span class="p">...</span>
+   <span class="p">...</span>
+<span class="p">)</span>
+<span class="k">SELECT</span> <span class="o">*</span>
+<span class="k">FROM</span> <span class="n">previous_results</span>
+<span class="k">JOIN</span> <span class="n">people_main</span>
+  <span class="k">ON</span> <span class="n">previous_results</span><span class="p">.</span><span class="n">__</span> <span class="o">=</span> <span class="n">people_main</span><span class="p">.</span><span class="n">__</span><span class="p">;</span>
+</code></pre></div></div>
+
+<h3 id="exercises">Exercises</h3>
+<ul>
+  <li>Write a SQL statement that returns the occupation and and how many people like that occupation. Results should be ordered by popularity from high to low</li>
+</ul>
+
+<p><em>Hint: First join people_main with people_likes, then run group by command with count</em></p>
+
+<ul>
+  <li>Write a SQL statement that returns the distinct name and age of all people who are liked by anyone younger than them. Results should be ordered by name (A-Z)</li>
+</ul>
+
+<h3 id="union">UNION</h3>
+<p>The UNION operator is used to combine the result-set of two or more SELECT statements.</p>
+
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">SELECT</span> <span class="k">column_name</span><span class="p">(</span><span class="n">s</span><span class="p">)</span> <span class="k">FROM</span> <span class="n">table1</span>
+<span class="k">UNION</span>
+<span class="k">SELECT</span> <span class="k">column_name</span><span class="p">(</span><span class="n">s</span><span class="p">)</span> <span class="k">FROM</span> <span class="n">table2</span><span class="p">;</span>
+</code></pre></div></div>
+
+<h3 id="having">HAVING</h3>
+<p>The HAVING clause was added to SQL because the WHERE keyword could not be used with aggregate functions.</p>
+
+<p>Example, if I want to know the occupations that have more than 5 people, we can write the query as</p>
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">SELECT</span> <span class="n">occupation</span><span class="p">,</span> <span class="k">count</span><span class="p">(</span><span class="o">*</span><span class="p">)</span> <span class="k">FROM</span> <span class="n">people_main</span>
+<span class="k">GROUP</span> <span class="k">BY</span> <span class="n">occupation</span>
+<span class="k">having</span> <span class="k">count</span><span class="p">(</span><span class="o">*</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">5</span><span class="p">;</span>
+</code></pre></div></div>
+<h3 id="exercise">Exercise:</h3>
+<ul>
+  <li>Write a SQL statement that returns the name and occupation of all people who have more than 3 friends.</li>
+</ul>
+
+<p><em>Consider using <code class="language-plaintext highlighter-rouge">JOIN</code>, <code class="language-plaintext highlighter-rouge">GROUP BY</code>, <code class="language-plaintext highlighter-rouge">COUNT</code> and <code class="language-plaintext highlighter-rouge">HAVING</code></em></p>
+
+<h2 id="relational-database">Relational database</h2>
+
+<p>Different <a href="https://www.dotnettricks.com/learn/sqlserver/different-types-of-sql-keys">Key types</a></p>
+
+<p><a href="https://www.w3schools.com/sql/sql_primarykey.asp"><strong>Primary key</strong></a> is a set of one or more fields/columns of a table that uniquely identify a record in database table. It can not accept null, duplicate values. Only one Candidate Key can be Primary Key.</p>
+
+<p><a href="https://www.w3schools.com/sql/sql_foreignkey.asp"><strong>Foreign key</strong></a> is a field in database table that is Primary key in another table. It can accept multiple null, duplicate values. For more help refer the article <a href="http://www.dotnettricks.com/learn/sqlserver/difference-between-primary-key-and-foreign-key">Difference between primary key and foreign key</a>.</p>
+
+<h2 id="practice">Practice</h2>
+<p>Consider the following relational schema:</p>
+
+<p><img src="../assets/notesFigs/Computer-store-db.png" width="600" /></p>
+
+<p>PK and FK stand for primary key and foreign key respectively.</p>
+
+<p>We first generate the tables using the following code:</p>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># In Python
+</span><span class="n">conn</span> <span class="o">=</span> <span class="n">sqlite3</span><span class="p">.</span><span class="n">connect</span><span class="p">(</span><span class="s">'computer.db'</span><span class="p">)</span>
+<span class="n">cursor_obj</span> <span class="o">=</span> <span class="n">conn</span><span class="p">.</span><span class="n">cursor</span><span class="p">()</span>
+<span class="n">cursor_obj</span><span class="p">.</span><span class="n">execute</span><span class="p">(</span><span class="s">'''
+CREATE TABLE Manufacturers (
+	Code INTEGER PRIMARY KEY NOT NULL,
+	Name CHAR(50) NOT NULL 
+);
+'''</span><span class="p">)</span>
+<span class="n">cursor_obj</span><span class="p">.</span><span class="n">execute</span><span class="p">(</span><span class="s">'''
+CREATE TABLE Products (
+	Code INTEGER PRIMARY KEY NOT NULL,
+	Name CHAR(50) NOT NULL ,
+	Price REAL NOT NULL ,
+	Manufacturer INTEGER NOT NULL 
+		CONSTRAINT fk_Manufacturers_Code REFERENCES Manufacturers(Code)
+);
+'''</span><span class="p">)</span>
+<span class="n">cursor_obj</span><span class="p">.</span><span class="n">execute</span><span class="p">(</span><span class="s">'''
+INSERT INTO Manufacturers(Code,Name) VALUES (1,'Sony'),
+                                    (2,'Creative Labs'),
+                                    (3,'Hewlett-Packard'),
+                                    (4,'Iomega'),
+                                    (5,'Fujitsu'),
+                                    (6,'Winchester');   
+'''</span><span class="p">)</span>
+<span class="n">cursor_obj</span><span class="p">.</span><span class="n">execute</span><span class="p">(</span><span class="s">'''
+INSERT INTO Products(Code,Name,Price,Manufacturer) VALUES
+(1,'Hard drive',240,5),
+(2,'Memory',120,6),
+(3,'ZIP drive',150,4),
+(4,'Floppy disk',5,6),
+(5,'Monitor',240,1),
+(6,'DVD drive',180,2),
+(7,'CD drive',90,2),
+(8,'Printer',270,3),
+(9,'Toner cartridge',66,3),
+(10,'DVD burner',180,2);
+'''</span><span class="p">)</span>
+
+</code></pre></div></div>
+<p>Now, based on the tables created, finish the following tasks:</p>
+<ul>
+  <li>Select the names and the prices of all the products in the store.</li>
+  <li>Select the name of the products with a price less than or equal to $200.</li>
+  <li>Select the name and price in cents (i.e., the price must be multiplied by 100).</li>
+  <li>Compute the average price of all the products.</li>
+  <li>Select the name and price of all products with a price larger than or equal to $180, and sort first by price (in descending order), and then by name (in ascending order).</li>
+  <li>Select the name and price of the cheapest product.</li>
+  <li>Select the average price of each manufacturer’s products, showing the manufacturer’s name.</li>
+</ul>
+
+<p><a href="../assets/notebooks/sql_practice.html">Solutions</a></p>
+
+<h2 id="interview-questions">Interview questions:</h2>
+<ol>
+  <li>
+    <p>Suppose we throw a fair coin. Which of the following probability is larger: (1) Throw 10 times and get 5 heads. (2) Throw 100 times and get 50 heads.</p>
+  </li>
+  <li>
+    <p>Suppose we do a simple linear regression without inercept: <code class="language-plaintext highlighter-rouge">y ~ x</code>. (1) Will the point estimate of $\hat\beta$ change if we duplicate the data points? (2) Will the $t$-statistic change? If it changes, what is the relationship with before?</p>
+  </li>
+  <li>
+    <p>Suppose we do a simple linear regression with intercept, and the sample variance of $x_i$ and $y_i$ equals to each other. Consider the following two model: $y = \hat a_1 + \hat b_1 x$; $x = \hat a_2 + \hat b_2 y$. (1) What are the relationships between $\hat b_1$ and $\hat b_2$? (2) What are the relationships between $R^2$ when we run <code class="language-plaintext highlighter-rouge">y ~ x</code> and <code class="language-plaintext highlighter-rouge">x ~ y</code>? (3) What are the relationship between $\hat b_1$, $\hat b_2$ and $R^2$?</p>
+  </li>
+  <li>
+    <p>Find an example such that $\text{Cor}(x_1, y) &lt; 0.1$, $\text{Cor}(x_2, y) = 0$, but the $R^2$ for <code class="language-plaintext highlighter-rouge">y ~ x1 + x2</code> equals to 1.</p>
+  </li>
+</ol>
+
+<hr />
+
+  </div>
+</div>
+
+<script type="text/javascript"
+        src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS_CHTML"></script>
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+tex2jax: {
+inlineMath: [['$','$'], ['\\(','\\)']],
+processEscapes: true},
+jax: ["input/TeX","input/MathML","input/AsciiMath","output/CommonHTML"],
+extensions: ["tex2jax.js","mml2jax.js","asciimath2jax.js","MathMenu.js","MathZoom.js","AssistiveMML.js", "[Contrib]/a11y/accessibility-menu.js"],
+TeX: {
+extensions: ["AMSmath.js","AMSsymbols.js","noErrors.js","noUndefined.js"],
+equationNumbers: {
+autoNumber: "AMS"
+}
+}
+});
+</script>
+      </div>
+      <hr>
+      <footer>
+        <p>
+          <!-- start of footer -->
+          Fall 2020 &nbsp;-&nbsp;
+          <a href="http://mlqmlq.github.io">Linquan Ma</a>
+          <!-- end of footer -->
+        </small></p>
+      </footer>
+
+    </div>
+
+    
+  </body>
+</html>
+
