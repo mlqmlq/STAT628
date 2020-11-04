@@ -1,6 +1,6 @@
 ---
 layout: page
-title: schedule & assignments
+title: Schedule
 description: topic, assignments, notes, for each class period
 ---
 
@@ -13,6 +13,13 @@ Will get updated each week, refresh your browser!
 + Friday 2:30-3:45 pm, 105 Brogden Psychology Building
 
 **Office hours**: Tueday & Thursday 7:00-8:00 pm, CST, online
+
+---
+<p></p>
+#### [Discussion 7](d7.html) (11/04 & 11/06)
+
+- Module 3 data preprocessing
+- Interview Questions 
 
 ---
 <p></p>
