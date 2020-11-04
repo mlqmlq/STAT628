@@ -82,6 +82,9 @@
 <div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">head</span> <span class="nt">-n</span> 100000 review_city.json <span class="o">&gt;&gt;</span> sample_review.json
 </code></pre></div></div>
 
+<p>All of today’s job was done in Python. If you want to use R and tidyverse, feel free to checkout this book: <a href="https://www.tidytextmining.com/index.html">Text Mining with R
+</a>.</p>
+
 <p>Then, we open a Jupyter Notebook and load <code class="language-plaintext highlighter-rouge">sample_review.json</code> and <code class="language-plaintext highlighter-rouge">business.json</code> into pandas dataframes using the <code class="language-plaintext highlighter-rouge">pd.read_json</code> command.</p>
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="n">pd</span>
@@ -91,14 +94,101 @@
 <span class="n">business</span><span class="p">.</span><span class="n">head</span><span class="p">()</span>
 </code></pre></div></div>
 
-<p>Then, similar to <code class="language-plaintext highlighter-rouge">SQL</code>, we can join tables in <code class="language-plaintext highlighter-rouge">pandas</code> using <code class="language-plaintext highlighter-rouge">DataFrame.join</code> command.</p>
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">df_raw</span> <span class="o">=</span> <span class="n">review</span><span class="p">.</span><span class="n">join</span><span class="p">(</span><span class="n">business</span><span class="p">,</span> <span class="n">lsuffix</span><span class="o">=</span><span class="s">'business_id'</span><span class="p">,</span> <span class="n">rsuffix</span><span class="o">=</span><span class="s">'business_id'</span><span class="p">,</span> <span class="n">how</span><span class="o">=</span><span class="s">'inner'</span><span class="p">)</span>
+<p>Then, similar to <code class="language-plaintext highlighter-rouge">SQL</code>, we can join tables in <code class="language-plaintext highlighter-rouge">pandas</code> using <code class="language-plaintext highlighter-rouge">pd.merge</code> command. For more merging pandas dataframes, check out <a href="https://pandas.pydata.org/pandas-docs/stable/user_guide/merging.html">here</a>.</p>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">df_raw</span> <span class="o">=</span> <span class="n">pd</span><span class="p">.</span><span class="n">merge</span><span class="p">(</span><span class="n">review</span><span class="p">,</span> <span class="n">business</span><span class="p">,</span> <span class="n">how</span><span class="o">=</span><span class="s">'left'</span><span class="p">,</span> <span class="n">on</span><span class="o">=</span><span class="s">'business_id'</span><span class="p">)</span>
 <span class="n">df_raw</span><span class="p">.</span><span class="n">head</span><span class="p">()</span>
 </code></pre></div></div>
 <p>Then, we use the <code class="language-plaintext highlighter-rouge">DataFrame.join</code> method to see how many rows and columns are there:</p>
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">df_raw</span><span class="p">.</span><span class="n">shape</span>
-<span class="c1"># Output: (100000, 23)
+<span class="c1"># Output: (100000, 22)
 </span></code></pre></div></div>
+<p>Let’s look at the column names:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">df_raw</span><span class="p">.</span><span class="n">columns</span>
+<span class="c1"># Output: Index(['review_id', 'user_id', 'business_id', 'stars_x', 'useful', 'funny',
+#       'cool', 'text', 'date', 'name', 'address', 'city', 'state',
+#       'postal_code', 'latitude', 'longitude', 'stars_y', 'review_count',
+#       'is_open', 'attributes', 'categories', 'hours'],
+#      dtype='object')
+</span></code></pre></div></div>
+<p>We can drop columns <code class="language-plaintext highlighter-rouge">review_id</code>, <code class="language-plaintext highlighter-rouge">user_id</code>, <code class="language-plaintext highlighter-rouge">funny</code>, <code class="language-plaintext highlighter-rouge">cool</code>, <code class="language-plaintext highlighter-rouge">date</code>, <code class="language-plaintext highlighter-rouge">latitude</code>, <code class="language-plaintext highlighter-rouge">longitude</code>, <code class="language-plaintext highlighter-rouge">is_open</code> because they can help little for our analysis:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">df</span> <span class="o">=</span> <span class="n">df_raw</span><span class="p">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s">'business_id'</span><span class="p">,</span> <span class="s">'review_id'</span><span class="p">,</span> <span class="s">'user_id'</span><span class="p">,</span> <span class="s">'funny'</span><span class="p">,</span> <span class="s">'cool'</span><span class="p">,</span> <span class="s">'date'</span><span class="p">,</span> <span class="s">'latitude'</span><span class="p">,</span> <span class="s">'longitude'</span><span class="p">,</span> <span class="s">'is_open'</span><span class="p">,</span> <span class="s">'review_count'</span><span class="p">,</span> <span class="s">'hours'</span><span class="p">])</span>
+</code></pre></div></div>
+
+<p>Let now check how many records are for Madison restaurants from the first 100,000 reviews:</p>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">sum</span><span class="p">(</span><span class="n">df</span><span class="p">.</span><span class="n">city</span> <span class="o">==</span> <span class="s">'Madison'</span><span class="p">)</span>
+<span class="c1"># 11792
+</span></code></pre></div></div>
+<p>Suppose we want to study the restaurants in Madison, we can subset the dataset like this:</p>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">Madison</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">df</span><span class="p">.</span><span class="n">city</span> <span class="o">==</span> <span class="s">'Madison'</span><span class="p">]</span>
+<span class="n">Madison</span> <span class="o">=</span> <span class="n">Madison</span><span class="p">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s">'city'</span><span class="p">,</span> <span class="s">'state'</span><span class="p">])</span>
+</code></pre></div></div>
+
+<p>Re-index the <code class="language-plaintext highlighter-rouge">Madison</code> dataframe:</p>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">Madison</span><span class="p">.</span><span class="n">reset_index</span><span class="p">(</span><span class="n">drop</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+</code></pre></div></div>
+
+<h2 id="nltk-natural-language-toolkit">nltk (Natural Language Toolkit)</h2>
+
+<p>Then, we turn our focus on the reviews itself. We will use the <a href="https://www.nltk.org/">nltk</a> package.</p>
+
+<ul>
+  <li><strong>Popularity</strong>: NLTK is one of the leading platforms for dealing with language data.</li>
+  <li><strong>Simplicity</strong>: Provides easy-to-use APIs for a wide variety of text preprocessing methods.</li>
+</ul>
+
+<p>Firstly, we assign the column <code class="language-plaintext highlighter-rouge">text</code> to a new variable and convert it to a list. We then convert each review to lower cases using the <code class="language-plaintext highlighter-rouge">string.lower()</code> method:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">text</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">Madison</span><span class="p">.</span><span class="n">text</span><span class="p">)</span>
+</code></pre></div></div>
+<p>Then, we remove punctuations. We save only the characters that are not punctuation, which can be checked by using <code class="language-plaintext highlighter-rouge">string.punctuation</code>:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">string</span>
+<span class="k">print</span><span class="p">(</span><span class="n">string</span><span class="p">.</span><span class="n">punctuation</span><span class="p">)</span>
+<span class="c1"># !"#$%&amp;'()*+,-./:;&lt;=&gt;?@[\]^_`{|}~
+</span></code></pre></div></div>
+
+<p>We remove the punctuations using <a href="https://realpython.com/list-comprehension-python/">list comprehensions</a>.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">text</span> <span class="o">=</span> <span class="p">[</span><span class="s">""</span><span class="p">.</span><span class="n">join</span><span class="p">([</span><span class="n">char</span> <span class="k">for</span> <span class="n">char</span> <span class="ow">in</span> <span class="n">a</span> <span class="k">if</span> <span class="n">char</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">string</span><span class="p">.</span><span class="n">punctuation</span><span class="p">])</span> <span class="k">for</span> <span class="n">a</span> <span class="ow">in</span> <span class="n">text</span><span class="p">]</span>
+<span class="n">text</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+<span class="c1"># 'easily my favorite place to eat in madison  great laothai food  curries are fantastic and make sure to start with a soup  theyre always good  tip place is tiny and you will wait  either get carry out or head across the street to the weary traveler to grab a beer while you wait for your table'
+</span>
+</code></pre></div></div>
+
+<p>After that, strings can be tokenized into tokens via <code class="language-plaintext highlighter-rouge">nltk.word_tokenize</code>:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">nltk</span> <span class="kn">import</span> <span class="n">word_tokenize</span>
+<span class="n">words</span> <span class="o">=</span> <span class="n">word_tokenize</span><span class="p">(</span><span class="n">text_p</span><span class="p">)</span>
+</code></pre></div></div>
+<p>If <code class="language-plaintext highlighter-rouge">nltk</code> throws an error, perhaps you need to run the following command:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">nltk</span><span class="p">.</span><span class="n">download</span><span class="p">(</span><span class="s">'punkt'</span><span class="p">)</span>
+</code></pre></div></div>
+<p>In this way, <code class="language-plaintext highlighter-rouge">words</code> contains all the words for each of the review.</p>
+
+<p>Then, we’d better to one more step of stop word filtering, to exclude the words appearing everywhere like <strong>a, an, the, I, you, can</strong>.</p>
+
+<p>There is a list of stopwords in the <code class="language-plaintext highlighter-rouge">nltk</code> package, and we can access them through</p>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">nltk.corpus</span> <span class="kn">import</span> <span class="n">stopwords</span>
+<span class="n">stop_words</span> <span class="o">=</span> <span class="n">stopwords</span><span class="p">.</span><span class="n">words</span><span class="p">(</span><span class="s">'english'</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">stop_words</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>To combine  different forms of a word together, such as organize, organizes, and organizing, we use the technique of lemmatization. Firstly, we need to download the corpus <code class="language-plaintext highlighter-rouge">wordnet</code>:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">nltk</span><span class="p">.</span><span class="n">download</span><span class="p">(</span><span class="s">'wordnet'</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>Then we perform lemmatization:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">nltk.stem.wordnet</span> <span class="kn">import</span> <span class="n">WordNetLemmatizer</span>
+<span class="n">lmtzr</span> <span class="o">=</span> <span class="n">WordNetLemmatizer</span><span class="p">()</span>
+<span class="n">lemmatized_words</span> <span class="o">=</span> <span class="p">[[</span><span class="n">lmtzr</span><span class="p">.</span><span class="n">lemmatize</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">a</span><span class="p">]</span> <span class="k">for</span> <span class="n">a</span> <span class="ow">in</span> <span class="n">filtered_words</span><span class="p">]</span>
+</code></pre></div></div>
+
+<p>Then, we can create a corpus based on <code class="language-plaintext highlighter-rouge">lemmatized_words</code>.</p>
 
 <h2 id="interview-questions">Interview questions:</h2>
 
