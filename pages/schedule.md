@@ -19,7 +19,6 @@ Will get updated each week, refresh your browser!
 #### [Discussion 7](d7.html) (11/04 & 11/06)
 
 - Module 3 data preprocessing
-- Interview Questions 
 
 ---
 <p></p>
