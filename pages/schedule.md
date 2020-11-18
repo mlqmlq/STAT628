@@ -16,6 +16,12 @@ Will get updated each week, refresh your browser!
 
 ---
 <p></p>
+#### [Discussion 8](d8.html) (11/18 & 11/20)
+
+- Webcrawling
+
+---
+<p></p>
 #### [Discussion 7](d7.html) (11/04 & 11/06)
 
 - Module 3 data preprocessing

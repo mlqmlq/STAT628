@@ -1,0 +1,180 @@
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Discussion 8</title>
+    <meta name="author" content="Linquan Ma">
+
+    <!-- Enable responsive viewport -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
+    <!--[if lt IE 9]>
+      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+    <!-- Le styles -->
+    <link href="http://mlqmlq.github.io/STAT628/assets/themes/twitter/bootstrap/css/bootstrap.2.2.2.min.css" rel="stylesheet">
+    <link href="http://mlqmlq.github.io/STAT628/assets/themes/twitter/css/style.css?body=1" rel="stylesheet" type="text/css" media="all">
+    <link href="http://mlqmlq.github.io/STAT628/assets/themes/twitter/css/main.css" rel="stylesheet" type="text/css" media="all">
+
+    <!-- Le fav and touch icons -->
+
+    <!-- atom & rss feed -->
+    <link href="nil" type="application/atom+xml" rel="alternate" title="Sitewide ATOM Feed">
+    <link href="nil" type="application/rss+xml" rel="alternate" title="Sitewide RSS Feed">
+
+  </head>
+
+  <body>
+    <div class="navbar">
+      <div class="navbar-inner">
+        <div class="container-narrow">
+          <a class="brand" href="/">Data Science Practicum - STAT 628 - Fall 2020</a>
+          <ul class="nav">
+              <li><a href="/pages/schedule.html">schedule</a></li>
+          </ul>
+
+        </div>
+      </div>
+    </div>
+
+    <div class="container-narrow">
+
+      <div class="content">
+        
+<div class="page-header">
+  <h2>Discussion 8 </h2>
+</div>
+
+<div class="row-fluid">
+  <div class="span12">
+    <h2 id="webcrawling">Webcrawling</h2>
+<hr />
+
+<p>The contents are from <a href="https://cs.brown.edu/courses/csci1951-a/">Brown CS1951A</a>.</p>
+
+<ul>
+  <li><a href="https://www.analyticsvidhya.com/blog/2017/03/beginners-guide-on-web-scraping-in-r-using-rvest-with-hands-on-knowledge/">R version</a></li>
+</ul>
+
+<h3 id="example">Example</h3>
+
+<table rules="groups">
+  <thead>
+    <tr>
+      <th style="text-align: left">Time</th>
+      <th style="text-align: left">Food</th>
+      <th style="text-align: right">Calorie</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: left">breakfast</td>
+      <td style="text-align: left">egg, milk, cereal, avocado</td>
+      <td style="text-align: right">600</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">lunch</td>
+      <td style="text-align: left">chicken breast, brown rice, lettuce</td>
+      <td style="text-align: right">700</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">dinner</td>
+      <td style="text-align: left">steak, sweet potato, broccoli</td>
+      <td style="text-align: right">800</td>
+    </tr>
+  </tbody>
+  <tbody>
+    <tr>
+      <td style="text-align: left"> </td>
+      <td style="text-align: left"> </td>
+      <td style="text-align: right"> </td>
+    </tr>
+  </tbody>
+</table>
+
+<p>The following are the source code for this table.</p>
+
+<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;table</span> <span class="na">rules=</span><span class="s">"groups"</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;thead&gt;</span>
+    <span class="nt">&lt;tr&gt;</span>
+      <span class="nt">&lt;th</span> <span class="na">style=</span><span class="s">"text-align: left"</span><span class="nt">&gt;</span>Time<span class="nt">&lt;/th&gt;</span>
+      <span class="nt">&lt;th</span> <span class="na">style=</span><span class="s">"text-align: left"</span><span class="nt">&gt;</span>Food<span class="nt">&lt;/th&gt;</span>
+      <span class="nt">&lt;th</span> <span class="na">style=</span><span class="s">"text-align: right"</span><span class="nt">&gt;</span>Calorie<span class="nt">&lt;/th&gt;</span>
+    <span class="nt">&lt;/tr&gt;</span>
+  <span class="nt">&lt;/thead&gt;</span>
+  <span class="nt">&lt;tbody&gt;</span>
+    <span class="nt">&lt;tr&gt;</span>
+      <span class="nt">&lt;td</span> <span class="na">style=</span><span class="s">"text-align: left"</span><span class="nt">&gt;</span>breakfast<span class="nt">&lt;/td&gt;</span>
+      <span class="nt">&lt;td</span> <span class="na">style=</span><span class="s">"text-align: left"</span><span class="nt">&gt;</span>egg, milk, cereal, avocado<span class="nt">&lt;/td&gt;</span>
+      <span class="nt">&lt;td</span> <span class="na">style=</span><span class="s">"text-align: right"</span><span class="nt">&gt;</span>600<span class="nt">&lt;/td&gt;</span>
+    <span class="nt">&lt;/tr&gt;</span>
+    <span class="nt">&lt;tr&gt;</span>
+      <span class="nt">&lt;td</span> <span class="na">style=</span><span class="s">"text-align: left"</span><span class="nt">&gt;</span>lunch<span class="nt">&lt;/td&gt;</span>
+      <span class="nt">&lt;td</span> <span class="na">style=</span><span class="s">"text-align: left"</span><span class="nt">&gt;</span>chicken breast, brown rice, lettuce<span class="nt">&lt;/td&gt;</span>
+      <span class="nt">&lt;td</span> <span class="na">style=</span><span class="s">"text-align: right"</span><span class="nt">&gt;</span>700<span class="nt">&lt;/td&gt;</span>
+    <span class="nt">&lt;/tr&gt;</span>
+    <span class="nt">&lt;tr&gt;</span>
+      <span class="nt">&lt;td</span> <span class="na">style=</span><span class="s">"text-align: left"</span><span class="nt">&gt;</span>dinner<span class="nt">&lt;/td&gt;</span>
+      <span class="nt">&lt;td</span> <span class="na">style=</span><span class="s">"text-align: left"</span><span class="nt">&gt;</span>steak, sweet potato, broccoli<span class="nt">&lt;/td&gt;</span>
+      <span class="nt">&lt;td</span> <span class="na">style=</span><span class="s">"text-align: right"</span><span class="nt">&gt;</span>800<span class="nt">&lt;/td&gt;</span>
+    <span class="nt">&lt;/tr&gt;</span>
+  <span class="nt">&lt;/tbody&gt;</span>
+  <span class="nt">&lt;tbody&gt;</span>
+    <span class="nt">&lt;tr&gt;</span>
+      <span class="nt">&lt;td</span> <span class="na">style=</span><span class="s">"text-align: left"</span><span class="nt">&gt;</span> <span class="nt">&lt;/td&gt;</span>
+      <span class="nt">&lt;td</span> <span class="na">style=</span><span class="s">"text-align: left"</span><span class="nt">&gt;</span> <span class="nt">&lt;/td&gt;</span>
+      <span class="nt">&lt;td</span> <span class="na">style=</span><span class="s">"text-align: right"</span><span class="nt">&gt;</span> <span class="nt">&lt;/td&gt;</span>
+    <span class="nt">&lt;/tr&gt;</span>
+  <span class="nt">&lt;/tbody&gt;</span>
+<span class="nt">&lt;/table&gt;</span>
+</code></pre></div></div>
+
+<p>Now lets’ use <a href="https://www.crummy.com/software/BeautifulSoup/bs4/doc/#installing-beautiful-soup">BeautifulSoup</a> to parse the html.</p>
+
+<ul>
+  <li><a href="../assets/notebooks/webcrawling.ipynb">Jupyter notebook</a></li>
+</ul>
+
+<hr />
+
+
+  </div>
+</div>
+
+<script type="text/javascript"
+        src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS_CHTML"></script>
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+tex2jax: {
+inlineMath: [['$','$'], ['\\(','\\)']],
+processEscapes: true},
+jax: ["input/TeX","input/MathML","input/AsciiMath","output/CommonHTML"],
+extensions: ["tex2jax.js","mml2jax.js","asciimath2jax.js","MathMenu.js","MathZoom.js","AssistiveMML.js", "[Contrib]/a11y/accessibility-menu.js"],
+TeX: {
+extensions: ["AMSmath.js","AMSsymbols.js","noErrors.js","noUndefined.js"],
+equationNumbers: {
+autoNumber: "AMS"
+}
+}
+});
+</script>
+      </div>
+      <hr>
+      <footer>
+        <p>
+          <!-- start of footer -->
+          Fall 2020 &nbsp;-&nbsp;
+          <a href="http://mlqmlq.github.io">Linquan Ma</a>
+          <!-- end of footer -->
+        </small></p>
+      </footer>
+
+    </div>
+
+    
+  </body>
+</html>
+
